@@ -1,0 +1,77 @@
+.perfil-page { padding: 110px 0 80px; }
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.perfil-avatar-wrap {
+  flex-shrink: 0;
+}
+.perfil-avatar {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--gold);
+}
+.perfil-info { flex: 1; }
+.perfil-badge { margin-bottom: 8px; }
+.perfil-name {
+  font-size: 1.8rem;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 4px;
+}
+.perfil-email { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 4px; }
+.perfil-since { color: var(--text-muted); font-size: 0.82rem; }
+.perfil-logout { margin-left: auto; }
+
+/* Reservas */
+.reservas-list { display: flex; flex-direction: column; gap: 16px; }
+.reserva-item {
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 16px;
+}
+.reserva-img-wrap {
+  width: 100px; height: 72px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.reserva-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.reserva-carro-nome {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text);
+  display: block;
+  margin-bottom: 6px;
+  transition: color 0.2s;
+}
+a.reserva-carro-nome:hover { color: var(--gold); }
+.reserva-meta { display: flex; gap: 16px; color: var(--text-muted); font-size: 0.82rem; flex-wrap: wrap; margin-bottom: 4px; }
+.reserva-msg { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+.reserva-status-col { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.btn-cancel {
+  background: none;
+  border: 1px solid #f87171;
+  color: #f87171;
+  padding: 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-cancel:hover { background: rgba(248,113,113,0.1); }
+
+.perfil-empty { text-align: center; padding: 60px 0; }
+.perfil-empty p:first-child { font-size: 2.5rem; margin-bottom: 12px; }
+.perfil-empty p { color: var(--text-muted); }
+
+@media (max-width: 600px) {
+  .reserva-item { grid-template-columns: 1fr; }
+  .reserva-img-wrap { width: 100%; height: 160px; }
+  .reserva-status-col { align-items: flex-start; }
+  .perfil-logout { width: 100%; margin-left: 0; }
+}

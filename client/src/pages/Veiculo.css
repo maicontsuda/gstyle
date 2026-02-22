@@ -1,0 +1,99 @@
+.veiculo-page { padding: 110px 0 80px; }
+.breadcrumb { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 32px; }
+.breadcrumb a { color: var(--text-muted); transition: color 0.2s; }
+.breadcrumb a:hover { color: var(--gold); }
+.breadcrumb span { color: var(--text); }
+
+.veiculo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+  align-items: start;
+}
+
+/* Gallery */
+.gallery-main {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  background: var(--bg-card);
+}
+.gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-badge {
+  position: absolute; top: 14px; left: 14px;
+  background: rgba(0,0,0,0.7);
+  color: var(--gold);
+  font-size: 0.78rem; font-weight: 700;
+  padding: 5px 12px; border-radius: 20px;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.gallery-thumbs { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.thumb {
+  width: 72px; height: 52px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0; background: none;
+  transition: border-color 0.2s;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb.active { border-color: var(--gold); }
+
+/* Info */
+.vinfo-tipo { font-size: 0.75rem; color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.vinfo-name { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 12px; }
+.vinfo-price { font-size: 2rem; font-weight: 700; color: var(--gold); margin-bottom: 24px; font-family: 'Inter', sans-serif; }
+
+.vinfo-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.spec-item { display: flex; flex-direction: column; gap: 2px; }
+.spec-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+.spec-val { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.text-green { color: #4ade80; }
+.text-blue  { color: #60a5fa; }
+
+.vinfo-desc { margin-bottom: 24px; }
+.vinfo-desc h3 { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; font-family: 'Inter', sans-serif; font-weight: 600; }
+.vinfo-desc p { color: var(--text-light); font-size: 0.92rem; line-height: 1.7; }
+
+/* Bottom section */
+.veiculo-bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* Financing / Test Drive */
+.financiamento-card, .testdrive-card { padding: 28px; }
+.financiamento-card h2, .testdrive-card h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 6px; }
+.fin-sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px; }
+.fin-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.fin-result {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.fin-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--text-muted); }
+.fin-row strong { color: var(--text); font-weight: 600; }
+.fin-row.highlight { border-top: 1px solid var(--border); padding-top: 10px; }
+.fin-row.highlight strong { color: var(--gold); font-size: 1.1rem; }
+.fin-obs { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+.reserva-ok { text-align: center; padding: 32px 0; color: var(--text-light); }
+.reserva-ok p:first-child { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+
+@media (max-width: 900px) {
+  .veiculo-grid { grid-template-columns: 1fr; }
+  .veiculo-bottom-grid { grid-template-columns: 1fr; }
+  .fin-fields { grid-template-columns: 1fr; }
+}
