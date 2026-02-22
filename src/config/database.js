@@ -1,0 +1,1 @@
+module.exports = { mongoURI: process.env.MONGODB_URI || 'mongodb://localhost:27017/gstyle-motors', jwtSecret: process.env.JWT_SECRET || 'your_jwt_secret_key', googleClientID: process.env.GOOGLE_CLIENT_ID, googleClientSecret: process.env.GOOGLE_CLIENT_SECRET, googleCallbackURL: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:5000/api/auth/google/callback' };
