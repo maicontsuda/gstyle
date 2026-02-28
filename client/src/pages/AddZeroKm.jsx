@@ -26,7 +26,8 @@ export default function AddZeroKm() {
   });
 
   // Basic Protection
-  if (!user || user.role !== 'admin') {
+  const isAdminOrDono = user && ['admin', 'dono'].includes(user.tipo_usuario);
+  if (!isAdminOrDono) {
     return (
       <div className="pt-32 container text-center min-h-screen">
         <h1 className="text-3xl text-red-500 mb-4">Acesso Negado</h1>
