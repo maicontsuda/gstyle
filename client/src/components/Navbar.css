@@ -114,6 +114,14 @@
   display: none;
   box-shadow: var(--shadow);
 }
+.navbar-user-menu::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 0;
+  right: 0;
+  height: 16px;
+}
 .navbar-user:hover .navbar-user-menu { display: block; }
 .navbar-user-menu a,
 .navbar-user-menu button {

@@ -17,6 +17,10 @@ const Sidebar = () => {
     { name: 'Site', path: '/site' },
   ];
 
+  if (user && ['admin', 'dono', 'gerente', 'funcionario'].includes(user.tipo_usuario)) {
+    links.push({ name: 'Admin', path: '/admin' });
+  }
+
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">

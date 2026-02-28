@@ -36,12 +36,17 @@ export default function Navbar() {
           <Link to="/servicos" className={location.pathname === '/servicos' ? 'active' : ''}>Serviços</Link>
           <Link to="/contato" className={location.pathname === '/contato' ? 'active' : ''}>Contato</Link>
           <Link to="/site" className={location.pathname === '/site' ? 'active' : ''}>Site</Link>
+          {user && ['admin', 'dono', 'gerente', 'funcionario'].includes(user.tipo_usuario) && (
+            <Link to="/admin" className={location.pathname.startsWith('/admin') ? 'active' : ''}>Admin</Link>
+          )}
         </nav>
 
         <div className="navbar-actions">
           {user ? (
             <div className="navbar-user">
-              <img src={user.thumbnail} alt={user.username} className="navbar-avatar" />
+              <Link to="/perfil">
+                <img src={user.thumbnail} alt={user.username} className="navbar-avatar" />
+              </Link>
               <div className="navbar-user-menu">
                 <Link to="/perfil">Meu Perfil</Link>
                 {user && ['admin', 'dono', 'gerente', 'funcionario'].includes(user.tipo_usuario) && (
