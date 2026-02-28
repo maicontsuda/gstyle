@@ -8,6 +8,7 @@ import Veiculo from './pages/Veiculo';
 import Login from './pages/Login';
 import Perfil from './pages/Perfil';
 import AuthCallback from './pages/AuthCallback';
+import Servicos from './pages/Servicos';
 import './index.css';
 
 function Layout() {
@@ -24,6 +25,7 @@ function Layout() {
           <Route path="/login"          element={<Login />} />
           <Route path="/perfil"         element={<Perfil />} />
           <Route path="/auth/callback"  element={<AuthCallback />} />
+          <Route path="/servicos"       element={<Servicos />} />
         </Routes>
       </main>
       {!hideLayout && <Footer />}

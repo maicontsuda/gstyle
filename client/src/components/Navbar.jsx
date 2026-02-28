@@ -15,20 +15,23 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => setMenuOpen(false), [location]);
+  useEffect(() => { setMenuOpen(false); }, [location]);
 
   return (
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-inner container">
         <Link to="/" className="navbar-logo">
-          G<span>-</span>Style <em>Motors</em>
+          <img src="/logo-gstyle.png" alt="Custom Shop G-Style" className="navbar-logo-img" />
+          <span className="navbar-logo-text">
+            Custom Shop <em>G-Style</em>
+          </span>
         </Link>
 
         <nav className={`navbar-links ${menuOpen ? 'open' : ''}`}>
           <Link to="/"        className={location.pathname === '/'        ? 'active' : ''}>Início</Link>
           <Link to="/estoque" className={location.pathname === '/estoque' ? 'active' : ''}>Estoque</Link>
-          <a href="/#servicos">Serviços</a>
-          <a href="/#contato">Contato</a>
+          <Link to="/servicos" className={location.pathname === '/servicos' ? 'active' : ''}>Serviços</Link>
+          <Link to="/contato" className={location.pathname === '/contato' ? 'active' : ''}>Contato</Link>
         </nav>
 
         <div className="navbar-actions">

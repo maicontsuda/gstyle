@@ -1,24 +1,32 @@
 /* =============================================
-   G-Style Motors — Design System
+   Custom Shop G-Style — Design System
    ============================================= */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
 
 :root {
-  --gold:        #c9a84c;
-  --gold-light:  #e0c070;
-  --gold-dark:   #9a7a30;
+  /* ── Chrome/Silver Palette ── */
+  --chrome:        #c8cdd4;
+  --chrome-light:  #e8eaed;
+  --chrome-dark:   #8a9099;
+  --chrome-shine:  #ffffff;
+
+  /* ── Backgrounds ── */
   --bg-deep:     #080808;
   --bg-dark:     #111111;
   --bg-card:     #181818;
   --bg-card2:    #1e1e1e;
   --border:      #2a2a2a;
+
+  /* ── Text ── */
   --text:        #f0f0f0;
   --text-muted:  #999999;
   --text-light:  #cccccc;
+
+  /* ── Layout ── */
   --radius:      12px;
   --radius-sm:   8px;
   --shadow:      0 4px 24px rgba(0,0,0,0.5);
-  --shadow-gold: 0 0 20px rgba(201,168,76,0.15);
+  --shadow-chrome: 0 0 20px rgba(200,205,212,0.12);
   --transition:  0.25s ease;
 }
 
@@ -28,16 +36,37 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--bg-deep);
+  background-color: var(--bg-deep);
+  background-image:
+    url('/logo-gstyle.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 60vmin;
+  background-attachment: fixed;
+  position: relative;
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
 }
 
+/* Logo shadow overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('/logo-gstyle.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 60vmin;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root { position: relative; z-index: 1; }
+
 a { color: inherit; text-decoration: none; }
-
 img { max-width: 100%; display: block; }
-
 h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
 
 /* ─── Utility ─────────────────────────────── */
@@ -48,7 +77,12 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
   color: var(--text);
   margin-bottom: 8px;
 }
-.section-title span { color: var(--gold); }
+.section-title span {
+  background: linear-gradient(135deg, var(--chrome-light), var(--chrome), var(--chrome-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 .section-sub { color: var(--text-muted); margin-bottom: 48px; font-size: 1rem; }
 
 /* ─── Buttons ─────────────────────────────── */
@@ -65,17 +99,17 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
   transition: all var(--transition);
 }
 .btn-primary {
-  background: var(--gold);
-  color: #000;
+  background: linear-gradient(135deg, var(--chrome-light), var(--chrome), #6e737a);
+  color: #010101;
 }
-.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
+.btn-primary:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,205,212,0.25); }
 
 .btn-outline {
   background: transparent;
-  color: var(--gold);
-  border: 1.5px solid var(--gold);
+  color: var(--chrome-light);
+  border: 1.5px solid var(--chrome);
 }
-.btn-outline:hover { background: var(--gold); color: #000; transform: translateY(-2px); }
+.btn-outline:hover { background: var(--chrome); color: #000; transform: translateY(-2px); }
 
 .btn-ghost {
   background: rgba(255,255,255,0.06);
@@ -93,7 +127,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
   letter-spacing: .5px;
   text-transform: uppercase;
 }
-.badge-gold   { background: rgba(201,168,76,0.15); color: var(--gold); }
+.badge-gold   { background: rgba(200,205,212,0.12); color: var(--chrome-light); }
 .badge-green  { background: rgba(34,197,94,0.12);  color: #4ade80; }
 .badge-blue   { background: rgba(59,130,246,0.12); color: #60a5fa; }
 
@@ -105,7 +139,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
   overflow: hidden;
   transition: all var(--transition);
 }
-.card:hover { transform: translateY(-4px); box-shadow: var(--shadow), var(--shadow-gold); border-color: rgba(201,168,76,0.25); }
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow), var(--shadow-chrome); border-color: rgba(200,205,212,0.2); }
 
 /* ─── Forms ───────────────────────────────── */
 input, select, textarea {
@@ -121,7 +155,7 @@ input, select, textarea {
 }
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--gold);
+  border-color: var(--chrome);
 }
 label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px; }
 
@@ -140,7 +174,7 @@ label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bot
 .spinner {
   width: 40px; height: 40px;
   border: 3px solid var(--border);
-  border-top-color: var(--gold);
+  border-top-color: var(--chrome);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 60px auto;
@@ -151,7 +185,7 @@ label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bot
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-dark); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+::-webkit-scrollbar-thumb:hover { background: var(--chrome-dark); }
 
 /* ─── Page enter animation ────────────────── */
 .page-enter { animation: fadeUp 0.45s ease both; }
@@ -160,10 +194,10 @@ label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bot
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Gold line accent ────────────────────── */
+/* ─── Chrome accent line ─────────────────── */
 .accent-line {
   width: 48px; height: 3px;
-  background: linear-gradient(90deg, var(--gold), transparent);
+  background: linear-gradient(90deg, var(--chrome-light), transparent);
   border-radius: 2px;
   margin-bottom: 20px;
 }
