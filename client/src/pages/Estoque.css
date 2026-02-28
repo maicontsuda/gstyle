@@ -31,13 +31,13 @@
 .btn-limpar {
   background: none;
   border: none;
-  color: var(--gold);
+  color: var(--chrome-light);
   cursor: pointer;
   font-size: 0.82rem;
   font-weight: 600;
   padding: 0;
 }
-.btn-limpar:hover { text-decoration: underline; }
+.btn-limpar:hover { text-decoration: underline; color: var(--chrome); }
 .filter-group { display: flex; flex-direction: column; gap: 6px; }
 .filter-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .estoque-main { min-width: 0; }
@@ -60,8 +60,8 @@
   font-size: 0.88rem;
   transition: all 0.2s;
 }
-.pag-btn:hover { border-color: var(--gold); color: var(--gold); }
-.pag-btn.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 700; }
+.pag-btn:hover { border-color: var(--chrome-light); color: var(--chrome-light); }
+.pag-btn.active { background: var(--chrome-light); color: #000; border-color: var(--chrome-light); font-weight: 700; text-shadow: none; box-shadow: 0 0 10px rgba(255,255,255,0.4); }
 
 @media (max-width: 900px) {
   .estoque-layout { grid-template-columns: 1fr; }

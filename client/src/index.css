@@ -70,18 +70,43 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
   align-items: center;
   gap: 8px;
   padding: 12px 28px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 600;
   font-size: 0.95rem;
+  letter-spacing: 0.5px;
   cursor: pointer;
   border: none;
-  transition: all var(--transition);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
 }
+.btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+.btn:hover::after {
+  opacity: 1;
+  left: 100%;
+}
+
 .btn-primary {
   background: linear-gradient(135deg, var(--chrome-light), var(--chrome), #6e737a);
   color: #010101;
+  box-shadow: 0 4px 15px rgba(200, 205, 212, 0.15);
 }
-.btn-primary:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,205,212,0.25); }
+.btn-primary:hover { 
+  filter: brightness(1.2); 
+  transform: translateY(-3px) scale(1.02); 
+  box-shadow: 0 8px 25px rgba(200, 205, 212, 0.35); 
+}
 
 .btn-outline {
   background: transparent;
@@ -112,13 +137,31 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
 
 /* ─── Cards ───────────────────────────────── */
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: rgba(15, 15, 15, 0.5); /* Semi-transparent base */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
   overflow: hidden;
-  transition: all var(--transition);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  z-index: 1;
 }
-.card:hover { transform: translateY(-4px); box-shadow: var(--shadow), var(--shadow-chrome); border-color: rgba(200,205,212,0.2); }
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+.card:hover { 
+  transform: translateY(-6px); 
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4), var(--shadow-chrome); 
+  border-color: rgba(255,255,255,0.2); 
+}
 
 /* ─── Forms ───────────────────────────────── */
 input, select, textarea {
