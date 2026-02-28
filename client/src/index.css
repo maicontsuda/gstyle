@@ -37,30 +37,9 @@ html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--bg-deep);
-  background-image:
-    url('/logo-gstyle.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 60vmin;
-  background-attachment: fixed;
-  position: relative;
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
-}
-
-/* Logo shadow overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url('/logo-gstyle.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 60vmin;
-  opacity: 0.012;
-  pointer-events: none;
-  z-index: 0;
 }
 
 #root { position: relative; z-index: 1; }
