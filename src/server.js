@@ -28,13 +28,6 @@ app.use('/api/publicacoes',   require('./routes/publicacoes'));
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
-// Servir arquivos estáticos do React em produção
-app.use(express.static(path.join(__dirname, '../client/dist')));
-
-// SPA Fallback: Qualquer rota que não comece com /api vai retornar o index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-});
 
 // MongoDB connection
 const db = require('./config/database');
