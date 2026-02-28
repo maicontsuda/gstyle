@@ -12,6 +12,9 @@ import AuthCallback from './pages/AuthCallback';
 import Servicos from './pages/Servicos';
 import Financeira from './pages/Financeira';
 import Aparencia from './pages/Aparencia';
+import ZeroKmHome from './pages/ZeroKmHome';
+import ZeroKmCars from './pages/ZeroKmCars';
+import AddZeroKm from './pages/AddZeroKm';
 import './index.css';
 
 function Layout() {
@@ -23,7 +26,8 @@ function Layout() {
       <main>
         <Routes>
           <Route path="/"               element={<Home />} />
-          <Route path="/zero-km"        element={<div className="page-enter container section" style={{paddingTop: 120}}><h1 className="section-title">Carros <span>0KM</span></h1><p>Em breve.</p></div>} />
+          <Route path="/zero-km"        element={<ZeroKmHome />} />
+          <Route path="/zero-km/:brand" element={<ZeroKmCars />} />
           <Route path="/estoque"        element={<Estoque />} />
           <Route path="/financeira"     element={<Financeira />} />
           <Route path="/seguro"         element={<div className="page-enter container section" style={{paddingTop: 120}}><h1 className="section-title">Seguro <span>Automotivo</span></h1><p>Em breve.</p></div>} />
@@ -33,6 +37,7 @@ function Layout() {
           <Route path="/auth/callback"  element={<AuthCallback />} />
           <Route path="/servicos"       element={<Servicos />} />
           <Route path="/site"           element={<Aparencia />} />
+          <Route path="/admin/add-zerokm" element={<AddZeroKm />} />
         </Routes>
       </main>
       {!hideLayout && <Footer />}
