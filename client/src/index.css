@@ -180,3 +180,63 @@ label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bot
   border-radius: 2px;
   margin-bottom: 20px;
 }
+
+/* =============================================
+   THEMES (Aparência)
+   ============================================= */
+
+/* 1. Dark Chrome (Boutique / Minimalist) */
+body.theme-dark-chrome {
+  --bg-deep:     #000000;
+  --bg-dark:     #050505;
+  --bg-card:     #0a0a0a;
+  --bg-card2:    #111111;
+  --border:      #222222;
+  
+  --chrome:        #e0e0e0;
+  --chrome-light:  #ffffff;
+  --chrome-dark:   #666666;
+  --shadow-chrome: 0 0 15px rgba(255,255,255,0.08);
+}
+
+/* 2. Cyberpunk Neon (JDM / Tokyo Drift) */
+body.theme-cyberpunk {
+  --bg-deep:     #0d1117;
+  --bg-dark:     #090c10;
+  --bg-card:     #161b22;
+  --bg-card2:    #21262d;
+  --border:      #30363d;
+  
+  --chrome:        #00f0ff;
+  --chrome-light:  #39ff14;
+  --chrome-dark:   #ff003c;
+  
+  --text:        #e6edf3;
+  --text-muted:  #7d8590;
+  --shadow-chrome: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+body.theme-cyberpunk .btn-primary { background: var(--chrome); color: #000; box-shadow: 0 0 15px rgba(0,240,255,0.4); }
+body.theme-cyberpunk .accent-line { background: linear-gradient(90deg, var(--chrome-dark), var(--chrome)); }
+
+/* 3. Titanium Trust (Corporate Glassmorphism) */
+body.theme-titanium {
+  --bg-deep:     #1e1e24;
+  --bg-dark:     #1a1a20;
+  --bg-card:     #2d2d35;
+  --bg-card2:    #383842;
+  --border:      #454552;
+  
+  --chrome:        #a0aec0;
+  --chrome-light:  #e2e8f0;
+  --chrome-dark:   #4a5568;
+  
+  --text:        #f7fafc;
+  --text-muted:  #a0aec0;
+  --shadow-chrome: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+body.theme-titanium .card {
+  background: rgba(45, 45, 53, 0.6);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}

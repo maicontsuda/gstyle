@@ -35,6 +35,7 @@ export default function Navbar() {
           <Link to="/seguro" className={location.pathname === '/seguro' ? 'active' : ''}>Seguro</Link>
           <Link to="/servicos" className={location.pathname === '/servicos' ? 'active' : ''}>Serviços</Link>
           <Link to="/contato" className={location.pathname === '/contato' ? 'active' : ''}>Contato</Link>
+          <Link to="/site" className={location.pathname === '/site' ? 'active' : ''}>Site</Link>
         </nav>
 
         <div className="navbar-actions">

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -10,6 +11,7 @@ import Perfil from './pages/Perfil';
 import AuthCallback from './pages/AuthCallback';
 import Servicos from './pages/Servicos';
 import Financeira from './pages/Financeira';
+import Aparencia from './pages/Aparencia';
 import './index.css';
 
 function Layout() {
@@ -30,6 +32,7 @@ function Layout() {
           <Route path="/perfil"         element={<Perfil />} />
           <Route path="/auth/callback"  element={<AuthCallback />} />
           <Route path="/servicos"       element={<Servicos />} />
+          <Route path="/site"           element={<Aparencia />} />
         </Routes>
       </main>
       {!hideLayout && <Footer />}
@@ -39,10 +42,12 @@ function Layout() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Layout />
-      </BrowserRouter>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Layout />
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
