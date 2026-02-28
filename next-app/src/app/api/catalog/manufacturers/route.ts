@@ -1,2 +1,50 @@
-export const dynamic = 'force-dynamic';
-import { NextResponse } from 'next/server'; import dbConnect from '@/lib/mongoose'; import Manufacturer from '@/models/Manufacturer'; import { authenticateToken, roleCheck } from '@/lib/authHelpers';  // PUBLIC: Puxar todas as marcas ativas para o filtro export async function GET(req: Request) {   try {     await dbConnect();     const brans = await Manufacturer.find({ active: true }).sort({ name: 1 });     return NextResponse.json(brans);   } catch (error) {     return NextResponse.json({ error: 'Erro ao buscar montadoras.' }, { status: 500 });   } }  // ADMIN: Criar nova marca export async function POST(req: Request) {   try {     const auth = await authenticateToken(req);     if (auth.error) return NextResponse.json({ error: auth.error }, { status: auth.status });          const roleAuth = roleCheck(auth.user, ['admin', 'dono', 'funcionario']);     if (roleAuth.error) return NextResponse.json({ error: roleAuth.error }, { status: roleAuth.status });      await dbConnect();     const { name, logoUrl, country, active } = await req.json();      const novaMarca = new Manufacturer({ name, logoUrl, country, active });     await novaMarca.save();          return NextResponse.json(novaMarca, { status: 201 });   } catch (error: any) {     if (error.code === 11000) {       return NextResponse.json({ error: 'Montadora já cadastrada.' }, { status: 400 });     }     return NextResponse.json({ error: 'Erro ao criar montadora.' }, { status: 500 });   } }
+export const dynamic = "force-dynamic";
+import { NextResponse } from "next/server";
+import dbConnect from "@/lib/mongoose";
+import Manufacturer from "@/models/Manufacturer";
+import { authenticateToken, roleCheck } from "@/lib/authHelpers";
+// PUBLIC: Puxar todas as marcas ativas para o filtro
+
+export async function GET(req: Request) {
+  try {
+    await dbConnect();
+    const brans = await Manufacturer.find({ active: true }).sort({ name: 1 });
+    return NextResponse.json(brans);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Erro ao buscar montadoras." },
+      { status: 500 },
+    );
+  }
+}
+// ADMIN: Criar nova marca
+
+export async function POST(req: Request) {
+  try {
+    const auth = await authenticateToken(req);
+    if (auth.error)
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
+    const roleAuth = roleCheck(auth.user, ["admin", "dono", "funcionario"]);
+    if (roleAuth.error)
+      return NextResponse.json(
+        { error: roleAuth.error },
+        { status: roleAuth.status },
+      );
+    await dbConnect();
+    const { name, logoUrl, country, active } = await req.json();
+    const novaMarca = new Manufacturer({ name, logoUrl, country, active });
+    await novaMarca.save();
+    return NextResponse.json(novaMarca, { status: 201 });
+  } catch (error: any) {
+    if (error.code === 11000) {
+      return NextResponse.json(
+        { error: "Montadora já cadastrada." },
+        { status: 400 },
+      );
+    }
+    return NextResponse.json(
+      { error: "Erro ao criar montadora." },
+      { status: 500 },
+    );
+  }
+}

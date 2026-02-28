@@ -1,2 +1,47 @@
-export const dynamic = 'force-dynamic';
-import { NextResponse } from 'next/server'; import dbConnect from '@/lib/mongoose'; import User from '@/models/User'; import { authenticateToken } from '@/lib/authHelpers';  export async function PATCH(req: Request) {   try {     const auth = await authenticateToken(req);     if (auth.error) return NextResponse.json({ error: auth.error }, { status: auth.status });      await dbConnect();     const { mostrarRolPub } = await req.json();      if (typeof mostrarRolPub !== 'boolean') {       return NextResponse.json({ error: 'Valor inválido. Deve ser booleano.' }, { status: 400 });     }      if (!auth.user) return NextResponse.json({ error: 'User missing from token' }, { status: 401 });      const userId = typeof auth.user === 'string' ? auth.user : (auth.user as any).id;     const user = await User.findByIdAndUpdate(       userId,       { mostrarRolPub },       { new: true }     ).select('-senha');      if (!user) return NextResponse.json({ error: 'Usuário não encontrado.' }, { status: 404 });     return NextResponse.json({       message: 'Preferência do Rol atualizada com sucesso!',       mostrarRolPub: user.mostrarRolPub     });   } catch (error) {     return NextResponse.json({ error: 'Erro ao atualizar preferência do Rol.' }, { status: 500 });   } }
+export const dynamic = "force-dynamic";
+import { NextResponse } from "next/server";
+import dbConnect from "@/lib/mongoose";
+import User from "@/models/User";
+import { authenticateToken } from "@/lib/authHelpers";
+
+export async function PATCH(req: Request) {
+  try {
+    const auth = await authenticateToken(req);
+    if (auth.error)
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
+    await dbConnect();
+    const { mostrarRolPub } = await req.json();
+    if (typeof mostrarRolPub !== "boolean") {
+      return NextResponse.json(
+        { error: "Valor inválido. Deve ser booleano." },
+        { status: 400 },
+      );
+    }
+    if (!auth.user)
+      return NextResponse.json(
+        { error: "User missing from token" },
+        { status: 401 },
+      );
+    const userId =
+      typeof auth.user === "string" ? auth.user : (auth.user as any).id;
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { mostrarRolPub },
+      { new: true },
+    ).select("-senha");
+    if (!user)
+      return NextResponse.json(
+        { error: "Usuário não encontrado." },
+        { status: 404 },
+      );
+    return NextResponse.json({
+      message: "Preferência do Rol atualizada com sucesso!",
+      mostrarRolPub: user.mostrarRolPub,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Erro ao atualizar preferência do Rol." },
+      { status: 500 },
+    );
+  }
+}
