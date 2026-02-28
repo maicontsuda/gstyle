@@ -28,6 +28,14 @@ app.use('/api/publicacoes',   require('./routes/publicacoes'));
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
+// Serve React SPA static files
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+// SPA Fallback - all non-API routes return index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
 
 // MongoDB connection
 const db = require('./config/database');
