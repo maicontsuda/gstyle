@@ -72,6 +72,50 @@ export default function AddZeroKm() {
     }
   };
 
+  // Predefined Brands and Models categorized by origin
+  const carModels = {
+    Japonesa: {
+      'Toyota': ['Corolla Cross', 'RAV4', 'Prius', 'Yaris Cross', 'Camry', 'Land Cruiser', 'C-HR', 'Crown', 'Alphard', 'Vellfire', 'Sienta', 'Aqua', 'Harrier'],
+      'Honda': ['Vezel', 'Civic', 'ZR-V', 'Step WGN', 'Accord', 'Fit', 'Freed', 'N-BOX', 'N-WGN', 'Odyssey'],
+      'Nissan': ['Kicks', 'Ariya', 'X-Trail', 'Note', 'Aura', 'Serena', 'Sakura', 'Skyline', 'Leaf', 'Roox'],
+      'Mazda': ['CX-30', 'CX-5', 'CX-60', 'Mazda3', 'Mazda2', 'Roadster'],
+      'Subaru': ['Crosstrek', 'Forester', 'Levorg', 'Outback', 'WRX', 'Impreza'],
+      'Suzuki': ['Jimny', 'Swift', 'Hustler', 'Spacia', 'Alto', 'Solio', 'Crossbee'],
+      'Mitsubishi': ['Outlander PHEV', 'Eclipse Cross', 'Delica D:5', 'eK X'],
+      'Daihatsu': ['Tanto', 'Rocky', 'Taft', 'Move']
+    },
+    Importada: {
+      'BMW': ['X1', 'X3', '3 Series', '4 Series', 'M2', 'M4', 'iX', 'i4', 'Z4', 'X5'],
+      'Mercedes-Benz': ['GLA', 'GLB', 'GLC', 'C-Class', 'E-Class', 'A-Class', 'G-Class', 'EQA', 'EQB'],
+      'Audi': ['Q3', 'Q5', 'A3', 'A4', 'e-tron', 'Q4 e-tron', 'A5', 'TT'],
+      'Volkswagen': ['Golf', 'Polo', 'T-Roc', 'Tiguan', 'ID.4'],
+      'Porsche': ['Macan', 'Cayenne', '911', 'Taycan', 'Panamera', '718 Boxster'],
+      'Volvo': ['XC40', 'XC60', 'V60', 'C40', 'EX30'],
+      'Jeep': ['Wrangler', 'Renegade', 'Compass', 'Grand Cherokee'],
+      'Peugeot': ['208', '2008', '308', '3008', 'e-208'],
+      'Renault': ['Kangoo', 'Lutecia', 'Captur', 'Megane R.S.'],
+      'Land Rover': ['Defender', 'Range Rover Evoque', 'Discovery Sport', 'Range Rover Velar'],
+      'Tesla': ['Model 3', 'Model Y', 'Model S', 'Model X']
+    }
+  };
+
+  const handleOriginChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      origin: e.target.value,
+      brand: '', // Reset brand when origin changes
+      model: ''  // Reset model when origin changes
+    }));
+  };
+
+  const handleBrandChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      brand: e.target.value,
+      model: '' // Reset model when brand changes
+    }));
+  };
+
   return (
     <div className="page-enter bg-[var(--bg-deep)] min-h-screen pt-32 pb-16">
       <div className="container max-w-3xl">
@@ -90,7 +134,7 @@ export default function AddZeroKm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-[var(--chrome-light)] mb-2">Origem</label>
-                <select name="origin" value={formData.origin} onChange={handleChange} required className="w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none cursor-pointer">
+                <select name="origin" value={formData.origin} onChange={handleOriginChange} required className="w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none cursor-pointer">
                   <option value="Japonesa">Doméstica (Japonesa)</option>
                   <option value="Importada">Importada</option>
                 </select>
@@ -98,14 +142,24 @@ export default function AddZeroKm() {
               
               <div>
                 <label className="block text-sm font-semibold text-[var(--chrome-light)] mb-2">Marca</label>
-                <input type="text" name="brand" value={formData.brand} onChange={handleChange} required placeholder="Ex: Toyota, BMW" className="w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none" />
+                <select name="brand" value={formData.brand} onChange={handleBrandChange} required className="w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none cursor-pointer">
+                  <option value="">Selecione a Marca...</option>
+                  {Object.keys(carModels[formData.origin]).map(b => (
+                    <option key={b} value={b}>{b}</option>
+                  ))}
+                </select>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-[var(--chrome-light)] mb-2">Modelo</label>
-                <input type="text" name="model" value={formData.model} onChange={handleChange} required placeholder="Ex: Corolla Cross" className="w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none" />
+                <select name="model" value={formData.model} onChange={handleChange} required disabled={!formData.brand} className="w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                  <option value="">Selecione o Modelo...</option>
+                  {formData.brand && carModels[formData.origin][formData.brand].map(m => (
+                    <option key={m} value={m}>{m}</option>
+                  ))}
+                </select>
               </div>
               
               <div>
