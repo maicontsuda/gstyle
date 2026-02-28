@@ -1,184 +1,144 @@
 import { useState } from 'react';
-import api from '../api';
 import './Financeira.css';
 
 export default function Financeira() {
-  const [form, setForm] = useState({
-    valorVeiculo: '',
-    entrada: '',
-    parcelas: '72',
-    taxaAnual: '4.9',
+  const [valorVeiculo, setValorVeiculo] = useState(1500000);
+  const [entrada, setEntrada] = useState(0);
+  const [taxaJuros, setTaxaJuros] = useState(1.9); // Taxa típica no Japão (1.5% - 3.5%)
+  const [meses, setMeses] = useState(60);
+
+  // Cálculo da prestação (Tabela Price)
+  const calcularPrestacao = () => {
+    const principal = valorVeiculo - entrada;
+    if (principal <= 0) return 0;
     
-    // Proposta details
-    nomeCompleto: '',
-    telefone: '',
-    email: '',
-    tipoVisto: 'Permanente',
-    tipoEmprego: 'Seishain (Efetivo)'
-  });
-  
-  const [resultado, setResultado] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [enviado, setEnviado] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(null);
+    // Taxa mensal
+    const i = (taxaJuros / 100) / 12;
+    // Fórmula: PMT = PV * [i * (1 + i)^n] / [(1 + i)^n - 1]
+    const pmt = principal * (i * Math.pow(1 + i, meses)) / (Math.pow(1 + i, meses) - 1);
+    
+    return Math.round(pmt);
+  };
 
-  const VISTOS = ['Permanente', 'Cônjuge de Japonês', 'Residente de Longo Prazo', 'Visto de Trabalho (Engenheiro/Humanas)', 'Dependente (Kajoku Taizai)', 'Estudante', 'Outro'];
-  const EMPREGOS = ['Seishain (Efetivo)', 'Keiyaku (Contrato Empreiteira / Hakken)', 'Keiyaku (Contrato Direto)', 'Arubaito / Part-time', 'Autônomo (Kojin Jigyo)', 'Desempregado', 'Outro'];
-
-  function handleChange(e) {
-    setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-  }
-
-  async function simular() {
-    setErrorMsg(null);
-    try {
-      const payload = {
-        valorVeiculo: parseFloat(form.valorVeiculo) || 0,
-        entrada: parseFloat(form.entrada) || 0,
-        prazo: parseInt(form.parcelas) || 72,
-        taxaAnual: parseFloat(form.taxaAnual) || 4.9
-      };
-      
-      const res = await api.post('/financiamento/simular', payload);
-      setResultado(res.data);
-    } catch (err) {
-      setErrorMsg(err.response?.data?.error || 'Erro na simulação.');
-    }
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMsg(null);
-    try {
-      const payload = {
-        valorDesejado: parseFloat(form.valorVeiculo) || 0,
-        entrada: parseFloat(form.entrada) || 0,
-        parcelas: parseInt(form.parcelas) || 72,
-        nomeCompleto: form.nomeCompleto,
-        telefone: form.telefone,
-        email: form.email,
-        tipoVisto: form.tipoVisto,
-        tipoEmprego: form.tipoEmprego
-      };
-      await api.post('/financiamento/proposta', payload);
-      setEnviado(true);
-    } catch(err) {
-      setErrorMsg(err.response?.data?.error || 'Erro ao enviar proposta. Preencha todos os campos.');
-    } finally {
-      setLoading(false);
-    }
-  }
+  const prestacaoMensal = calcularPrestacao();
+  const formatJPY = (val) => new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(val);
 
   return (
-    <div className="page-enter financeira-page">
-      <div className="container section">
+    <div className="financeira-page page-enter">
+      <div className="financeira-hero">
         <div className="accent-line" />
-        <h1 className="section-title">Simulação de <span>Financiamento JPN</span></h1>
-        <p className="section-sub">Calcule as parcelas em Ienes (¥) e envie sua proposta para pré-aprovação de crédito no Japão.</p>
+        <h1 className="section-title">
+          Financiamento <span>Automotivo</span>
+        </h1>
+        <p className="section-sub">
+          Aprovação rápida e as melhores taxas do mercado japonês.
+        </p>
+      </div>
 
-        {errorMsg && <div className="msg-alert error">{errorMsg}</div>}
+      <div className="container">
+        <div className="financeira-content">
+          
+          {/* SIMULADOR */}
+          <div className="card simulador-card">
+            <h2>Simulador de Financiamento</h2>
+            <p className="text-muted" style={{ marginBottom: 24, fontSize: '0.9rem' }}>
+              Simule as parcelas do seu próximo veículo G-Style.
+            </p>
 
-        <div className="financeira-grid">
-          {/* Simulador */}
-          <div className="financeira-card">
-            <h2>Simulador Automotivo</h2>
             <div className="form-group">
               <label>Valor do Veículo (¥)</label>
-              <input name="valorVeiculo" type="number" placeholder="Ex: 1500000" value={form.valorVeiculo} onChange={handleChange} />
+              <input 
+                type="number" 
+                value={valorVeiculo} 
+                onChange={e => setValorVeiculo(Number(e.target.value))}
+                step="10000"
+              />
             </div>
-            <div className="form-group">
-              <label>Valor da Entrada (¥)</label>
-              <input name="entrada" type="number" placeholder="Ex: 300000" value={form.entrada} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label>Número de Parcelas</label>
-              <select name="parcelas" value={form.parcelas} onChange={handleChange}>
-                {[12, 24, 36, 48, 60, 72, 84, 96, 108, 120].map(n => <option key={n} value={n}>{n}x meses</option>)}
-              </select>
-            </div>
-            <div className="form-group">
-              <label>Taxa de Juros Anual (APR %)</label>
-              <select name="taxaAnual" value={form.taxaAnual} onChange={handleChange}>
-                <option value="2.9">2.9% a.a</option>
-                <option value="3.9">3.9% a.a</option>
-                <option value="4.9">4.9% a.a</option>
-                <option value="5.9">5.9% a.a</option>
-                <option value="6.9">6.9% a.a</option>
-                <option value="7.9">7.9% a.a</option>
-                <option value="8.9">8.9% a.a</option>
-              </select>
-            </div>
-            <button className="btn btn-primary" style={{ width: '100%' }} onClick={simular}>
-              Simular Parcelas
-            </button>
 
-            {resultado && (
-              <div className="resultado-card">
-                <div className="resultado-item">
-                  <span>Valor Financiado</span>
-                  <strong>¥ {resultado.valorFinanciado.toLocaleString('ja-JP')}</strong>
-                </div>
-                <div className="resultado-item">
-                  <span>Juros Estimado Tot.</span>
-                  <strong>¥ {resultado.totalJuros.toLocaleString('ja-JP')}</strong>
-                </div>
-                <div className="resultado-item resultado-destaque">
-                  <span>Parcela Mensal Estimada</span>
-                  <strong>¥ {resultado.parcelaMensal.toLocaleString('ja-JP')} /mês</strong>
-                </div>
-                <p className="resultado-aviso" style={{ fontSize: '0.8rem', color: '#ff4a4a', marginTop: '10px' }}>* Simulação aproximada baseada na {resultado.taxaAnual}% APR. A taxa e parcela exatas dependem inteiramente da análise de crédito da financeira nipônica.</p>
+            <div className="form-group">
+              <label>Entrada (¥) - Opcional</label>
+              <input 
+                type="number" 
+                value={entrada} 
+                onChange={e => setEntrada(Number(e.target.value))}
+                step="10000"
+              />
+            </div>
+
+            <div className="form-group-row">
+              <div className="form-group">
+                <label>Taxa de Juros Anual (%)</label>
+                <input 
+                  type="number" 
+                  value={taxaJuros} 
+                  onChange={e => setTaxaJuros(Number(e.target.value))}
+                  step="0.1"
+                />
               </div>
-            )}
+              <div className="form-group">
+                <label>Prazos (Meses)</label>
+                <select value={meses} onChange={e => setMeses(Number(e.target.value))}>
+                  <option value={12}>12 vezes (1 ano)</option>
+                  <option value={24}>24 vezes (2 anos)</option>
+                  <option value={36}>36 vezes (3 anos)</option>
+                  <option value={48}>48 vezes (4 anos)</option>
+                  <option value={60}>60 vezes (5 anos)</option>
+                  <option value={72}>72 vezes (6 anos)</option>
+                  <option value={84}>84 vezes (7 anos)</option>
+                  <option value={96}>96 vezes (8 anos)</option>
+                  <option value={120}>120 vezes (10 anos)</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="simulador-resultado">
+              <div className="resultado-item">
+                <span className="resultado-label">Valor Financiado:</span>
+                <span className="resultado-valor">{formatJPY(Math.max(0, valorVeiculo - entrada))}</span>
+              </div>
+              <div className="resultado-item destaque">
+                <span className="resultado-label">Parcela Mensal Estimada:</span>
+                <span className="resultado-valor highlight">{formatJPY(prestacaoMensal)}<span>/mês</span></span>
+              </div>
+              <p className="aviso-rodape">* Valores estimados. A taxa real pode variar conforme a análise de crédito da financeira.</p>
+            </div>
           </div>
 
-          {/* Formulário de proposta */}
-          <div className="financeira-card">
-            <h2>Pré-Aprovação de Crédito JPN</h2>
-            {enviado ? (
-              <div className="enviado-msg">
-                <p style={{fontSize: '3rem'}}>✅</p>
-                <h3>Proposta enviada!</h3>
-                <p>Recebemos o seu perfil de crédito. Nossa equipe fará a pré-análise e entrará em contato telefone ou e-mail com os próximos passos.</p>
-                <button className="btn btn-outline" style={{marginTop: '20px'}} onClick={() => { setEnviado(false); setResultado(null); }}>Fazer nova simulação</button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label>Nome Completo (Romaji)</label>
-                  <input name="nomeCompleto" placeholder="Ex: CARLOS SILVA" value={form.nomeCompleto} onChange={handleChange} required />
-                </div>
-                <div className="form-row" style={{display: 'flex', gap: '16px'}}>
-                   <div className="form-group" style={{flex: 1}}>
-                     <label>Telefone (Celular preferencial)</label>
-                     <input name="telefone" placeholder="090-XXXX-XXXX" value={form.telefone} onChange={handleChange} required />
-                   </div>
-                   <div className="form-group" style={{flex: 1}}>
-                     <label>E-mail (Opcional)</label>
-                     <input type="email" name="email" placeholder="seu@email.com" value={form.email} onChange={handleChange} />
-                   </div>
-                </div>
-                
-                <div className="form-group">
-                  <label>Status do Visto (Zairyu Card)</label>
-                  <select name="tipoVisto" value={form.tipoVisto} onChange={handleChange} required>
-                    {VISTOS.map(v => <option key={v} value={v}>{v}</option>)}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Situação Empregatícia</label>
-                  <select name="tipoEmprego" value={form.tipoEmprego} onChange={handleChange} required>
-                    {EMPREGOS.map(e => <option key={e} value={e}>{e}</option>)}
-                  </select>
-                </div>
-                
-                <button className="btn btn-primary" style={{ width: '100%', marginTop: '16px' }} type="submit" disabled={loading}>
-                  {loading ? 'Enviando...' : 'Pedir Pré-Aprovação'}
-                </button>
-                <p className="resultado-aviso" style={{ fontSize: '0.75rem', marginTop: '10px' }}>Ao enviar, seu perfil será transferido com segurança para as financeiras japonesas parceiras da G-Style.</p>
-              </form>
-            )}
+          {/* REQUISITOS E FORMULÁRIO */}
+          <div className="documentos-section">
+            <h2 style={{ marginBottom: 20, fontFamily: "'Playfair Display', serif" }}>Pedido de Avaliação de Financiamento</h2>
+            <p className="text-muted" style={{ marginBottom: 30 }}>
+              Quer saber se o seu financiamento será aprovado? Reúna os documentos abaixo e nos envie para uma pré-avaliação sem compromisso.
+            </p>
+
+            <div className="card requisitos-card">
+              <h3>📄 Documentos Necessários (Para Brasileiros/Estrangeiros no Japão)</h3>
+              <ul className="docs-lista">
+                <li><span className="check">✓</span> <strong>Zairyu Card</strong> (Frente e Verso) - Dentro da validade</li>
+                <li><span className="check">✓</span> <strong>Carteira de Motorista Japonesa</strong> (Untensha Menkyosho) ou Internacional válida</li>
+                <li><span className="check">✓</span> <strong>Gensen Choshuhyo</strong> (Comprovante de rendimento do último ano) ou os 3 últimos Holerites (Kyuyo Meisai)</li>
+                <li><span className="check">✓</span> <strong>Hoken-sho</strong> (Cartão do Seguro de Saúde) Shakai Hoken ou Kokumin Kenko Hoken</li>
+                <li><span className="check">✓</span> <strong>Inkan</strong> (Carimbo pessoal registrado na prefeitura - opcional na pré-análise)</li>
+                <li><span className="check">✓</span> Comprovante de Residência (Juminhyo) emitido há menos de 3 meses</li>
+              </ul>
+            </div>
+
+            <div className="cta-avalsiacao" style={{ marginTop: 40 }}>
+              <h3>Como solicitar a pré-avaliação?</h3>
+              <p>Envie fotos nítidas dos documentos acima pelo nosso WhatsApp oficial. Um gerente de financiamento cuidará do seu caso com total sigilo e segurança.</p>
+              
+              <a 
+                href="https://wa.me/551199999999" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-primary"
+                style={{ marginTop: 20, display: 'inline-flex' }}
+              >
+                📱 Enviar Documentos por WhatsApp
+              </a>
+            </div>
           </div>
+
         </div>
       </div>
     </div>

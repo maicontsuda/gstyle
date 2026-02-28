@@ -29,7 +29,10 @@ export default function Navbar() {
 
         <nav className={`navbar-links ${menuOpen ? 'open' : ''}`}>
           <Link to="/"        className={location.pathname === '/'        ? 'active' : ''}>Início</Link>
+          <Link to="/zero-km" className={location.pathname === '/zero-km' ? 'active' : ''}>Carro 0KM</Link>
           <Link to="/estoque" className={location.pathname === '/estoque' ? 'active' : ''}>Estoque</Link>
+          <Link to="/financeira" className={location.pathname === '/financeira' ? 'active' : ''}>Financeira</Link>
+          <Link to="/seguro" className={location.pathname === '/seguro' ? 'active' : ''}>Seguro</Link>
           <Link to="/servicos" className={location.pathname === '/servicos' ? 'active' : ''}>Serviços</Link>
           <Link to="/contato" className={location.pathname === '/contato' ? 'active' : ''}>Contato</Link>
         </nav>

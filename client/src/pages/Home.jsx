@@ -30,10 +30,10 @@ export default function Home() {
       <section className="hero">
         <div className="hero-bg" />
         <div className="container hero-content">
-          <div className="hero-badge badge badge-gold">✦ Premium Collection 2025</div>
+          <div className="hero-badge badge badge-gold">✦ Custom Shop G-Style</div>
           <h1 className="hero-title">
-            Encontre o Carro<br />
-            <span>dos seus Sonhos</span>
+            Encontre o carro<br />
+            <span>Dos seus sonhos</span>
           </h1>
           <p className="hero-sub">
             Catálogo selecionado de veículos zero km e semi-novos com a garantia G-Style.

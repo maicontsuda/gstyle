@@ -10,8 +10,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 60% at 70% 40%, rgba(201,168,76,0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 80% 80% at 30% 80%, rgba(201,168,76,0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 60% at 70% 40%, rgba(200,205,212,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 30% 80%, rgba(200,205,212,0.04) 0%, transparent 70%),
     linear-gradient(135deg, #080808 0%, #0f0f0f 50%, #080808 100%);
   z-index: 0;
 }
@@ -39,7 +39,7 @@
   line-height: 1.1;
 }
 .hero-title span {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  background: linear-gradient(135deg, var(--chrome-light), var(--chrome), var(--chrome-dark));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -62,7 +62,7 @@
   display: block;
   font-size: 1.6rem;
   font-family: 'Playfair Display', serif;
-  color: var(--gold);
+  color: var(--chrome-light);
 }
 .hero-stat span { font-size: 0.82rem; color: var(--text-muted); }
 .hero-stat-divider { width: 1px; height: 40px; background: var(--border); }
@@ -82,8 +82,8 @@
 /* ── CTA ── */
 .cta-section { padding-bottom: 80px; }
 .cta-box {
-  background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.03) 100%);
-  border: 1px solid rgba(201,168,76,0.2);
+  background: linear-gradient(135deg, rgba(200,205,212,0.08) 0%, rgba(200,205,212,0.03) 100%);
+  border: 1px solid rgba(200,205,212,0.2);
   border-radius: var(--radius);
   padding: 64px;
   text-align: center;
@@ -92,7 +92,7 @@
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   margin-bottom: 16px;
 }
-.cta-box h2 span { color: var(--gold); }
+.cta-box h2 span { color: var(--chrome-light); }
 .cta-box p { color: var(--text-muted); margin-bottom: 36px; font-size: 1rem; }
 .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 

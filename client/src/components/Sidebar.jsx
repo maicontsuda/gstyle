@@ -7,13 +7,12 @@ const Sidebar = () => {
   const location = useLocation();
 
   const links = [
-    { name: 'Inicial', path: '/' },
-    { name: 'Carros Disponíveis', path: '/estoque' },
-    { name: 'Carros Zero', path: '/zero-km' },
-    { name: 'Comunidade / Parceiros', path: '/comunidade' },
-    { name: 'Rol de Clientes', path: '/rol-de-clientes' },
-    { name: 'Serviços', path: '/servicos' },
+    { name: 'Início', path: '/' },
+    { name: 'Carro 0KM', path: '/zero-km' },
+    { name: 'Estoque', path: '/estoque' },
     { name: 'Financeira', path: '/financeira' },
+    { name: 'Seguro', path: '/seguro' },
+    { name: 'Serviços', path: '/servicos' },
     { name: 'Contato', path: '/contato' },
   ];
 
