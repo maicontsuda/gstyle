@@ -15,12 +15,22 @@ const SERVICOS_MOCKUP = [
 
 export default function Home() {
   const [destaques, setDestaques] = useState([]);
+  const [totalVeiculos, setTotalVeiculos] = useState('...');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/carros?destaque=true&limit=6')
-      .then(r => setDestaques(r.data.carros || []))
-      .catch(() => setDestaques([]))
+    Promise.all([
+      api.get('/carros?destaque=true&limit=6'),
+      api.get('/carros?limit=1')
+    ])
+      .then(([resDestaques, resTotal]) => {
+        setDestaques(resDestaques.data.carros || []);
+        setTotalVeiculos(resTotal.data.total || 0);
+      })
+      .catch(() => {
+        setDestaques([]);
+        setTotalVeiculos(0);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -44,7 +54,7 @@ export default function Home() {
           </div>
 
           <div className="hero-stats">
-            <div className="hero-stat"><strong>500+</strong><span>Veículos no estoque</span></div>
+            <div className="hero-stat"><strong>{totalVeiculos}</strong><span>Veículos no estoque</span></div>
             <div className="hero-stat-divider" />
             <div className="hero-stat"><strong>98%</strong><span>Clientes satisfeitos</span></div>
             <div className="hero-stat-divider" />
