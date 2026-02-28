@@ -1,0 +1,110 @@
+.contato-page {
+  padding: 40px 0;
+}
+
+.contato-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.contato-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-card {
+  display: flex;
+  gap: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: border-color var(--transition);
+}
+
+.info-card:hover {
+  border-color: var(--primary);
+}
+
+.info-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.info-card h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.info-card p {
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.info-card a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.social-links a {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.social-links a:hover {
+  color: var(--silver);
+}
+
+.contato-mapa {
+  min-height: 400px;
+  display: flex;
+}
+
+.mapa-placeholder {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  gap: 12px;
+}
+
+.mapa-placeholder p:first-child {
+  font-size: 3rem;
+}
+
+.mapa-placeholder h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+}
+
+.mapa-placeholder p:last-of-type {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .contato-grid {
+    grid-template-columns: 1fr;
+  }
+}

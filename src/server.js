@@ -22,6 +22,8 @@ app.use('/api/carros',        require('./routes/carros'));
 app.use('/api/servicos',      require('./routes/servicos'));
 app.use('/api/financiamento', require('./routes/financiamento'));
 app.use('/api/reservas',      require('./routes/reservas'));
+app.use('/api/compras',       require('./routes/compras'));
+app.use('/api/publicacoes',   require('./routes/publicacoes'));
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));

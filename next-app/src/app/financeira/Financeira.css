@@ -1,0 +1,98 @@
+.financeira-page {
+  padding: 40px 0;
+}
+
+.financeira-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 32px;
+}
+
+.financeira-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.financeira-card h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.resultado-card {
+  margin-top: 8px;
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeUp 0.4s ease;
+}
+
+.resultado-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.92rem;
+}
+
+.resultado-item span {
+  color: var(--text-muted);
+}
+
+.resultado-item strong {
+  font-weight: 600;
+}
+
+.resultado-destaque {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  font-size: 1rem;
+}
+
+.resultado-destaque strong {
+  font-size: 1.3rem;
+  color: var(--primary);
+}
+
+.resultado-aviso {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.enviado-msg {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.enviado-msg p:first-child {
+  font-size: 3rem;
+}
+
+.enviado-msg h3 {
+  font-size: 1.2rem;
+}
+
+.enviado-msg p:last-child {
+  color: var(--text-muted);
+}

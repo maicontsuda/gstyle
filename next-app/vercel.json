@@ -1,0 +1,16 @@
+{
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "build": {
+    "env": {
+      "MONGODB_URI": "mongodb+srv://Vercel-Admin-Gstyle:08kuJANrJq59hdJs@gstyle.xaof1vs.mongodb.net/gstyle?retryWrites=true&w=majority",
+      "JWT_SECRET": "GStyleMotors2026SuperSecretKeyForLogin"
+    }
+  },
+  "env": {
+    "MONGODB_URI": "mongodb+srv://Vercel-Admin-Gstyle:08kuJANrJq59hdJs@gstyle.xaof1vs.mongodb.net/gstyle?retryWrites=true&w=majority",
+    "JWT_SECRET": "GStyleMotors2026SuperSecretKeyForLogin"
+  }
+}

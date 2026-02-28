@@ -17,11 +17,38 @@ const userSchema = new mongoose.Schema({
     },
     thumbnail: {
         type: String,
-        required: true,
+        default: '',
     },
     tipo_usuario: {
         type: String,
-        required: true,
+        enum: ['cliente', 'funcionario', 'dono', 'admin'],
+        default: 'cliente',
+    },
+    // Dados opcionais — visíveis apenas para o próprio usuário, admin, dono e funcionário
+    telefone: {
+        type: String,
+        default: '',
+    },
+    endereco: {
+        pais:        { type: String, default: 'Japão' },
+        prefeitura:  { type: String, default: '' },
+        cidade:      { type: String, default: '' },
+        bairro:      { type: String, default: '' },
+        cep:         { type: String, default: '' },
+    },
+    // Campos geridos pelo Admin (Histórico do Cliente)
+    anexos: [{
+        tipo: { type: String, enum: ['documento', 'foto', 'video', 'post_social'] },
+        titulo: String,
+        url: String, // Link da imagem, vídeo ou URL do post do Instagram/Facebook
+        descricao: String,
+        dataAdicao: { type: Date, default: Date.now }
+    }],
+    // Controle do Rol de Clientes (Galeria Pública)
+    rolCliente: {
+        visivel: { type: Boolean, default: false }, // Cliente decide
+        fotoDestaque: String,
+        depoimento: String
     },
     createdAt: {
         type: Date,
@@ -33,7 +60,6 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-// Updates the updatedAt field on every save
 userSchema.pre('save', function(next) {
     this.updatedAt = Date.now();
     next();

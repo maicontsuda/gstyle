@@ -1,0 +1,131 @@
+.admin-page {
+  padding: 40px 0;
+}
+
+.admin-header {
+  margin-bottom: 32px;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+
+.admin-content {
+  padding: 32px;
+}
+
+.admin-clientes-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.clientes-list-col {
+  border-right: 1px solid var(--border);
+  padding-right: 24px;
+  min-height: 400px;
+}
+
+.clientes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.clientes-list li {
+  padding: 12px 16px;
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.clientes-list li strong {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.clientes-list li span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.clientes-list li:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.clientes-list li.active {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--primary);
+  border-left: 4px solid var(--primary);
+}
+
+.empty-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+  font-style: italic;
+  background: rgba(0,0,0,0.2);
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.admin-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.admin-form .form-row > * {
+  margin: 0;
+}
+
+.carro-form .form-row {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.max-form {
+  max-width: 600px;
+}
+
+.form-actions {
+  margin-top: 24px;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 900px) {
+  .admin-clientes-layout {
+    grid-template-columns: 1fr;
+  }
+  .clientes-list-col {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding-right: 0;
+    padding-bottom: 24px;
+  }
+  .admin-form .form-row {
+    grid-template-columns: 1fr;
+  }
+}

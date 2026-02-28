@@ -6,7 +6,8 @@ module.exports = (passport) => {
         new GoogleStrategy({
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: '/auth/google/callback',
+            callbackURL: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/auth/google/callback`,
+            proxy: true,
         }, async (accessToken, refreshToken, profile, done) => {
             try {
                 // Check if user already exists in our db
@@ -18,7 +19,9 @@ module.exports = (passport) => {
                     user = await new User({
                         googleId: profile.id,
                         username: profile.displayName,
-                        thumbnail: profile._json.picture
+                        email: profile.emails?.[0]?.value || `${profile.id}@google.com`,
+                        thumbnail: profile._json.picture || '',
+                        tipo_usuario: 'cliente',
                     }).save();
                     done(null, user);
                 }
