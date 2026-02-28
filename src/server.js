@@ -20,6 +20,7 @@ app.use(passport.initialize());
 app.use('/api/auth',          require('./routes/auth'));
 app.use('/api/carros',        require('./routes/carros'));
 app.use('/api/zerokm',        require('./routes/zerokm'));
+app.use('/api/upload',        require('./routes/upload'));
 app.use('/api/servicos',      require('./routes/servicos'));
 app.use('/api/financiamento', require('./routes/financiamento'));
 app.use('/api/reservas',      require('./routes/reservas'));

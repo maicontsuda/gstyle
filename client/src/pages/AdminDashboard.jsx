@@ -29,26 +29,26 @@ export default function AdminDashboard() {
     },
     {
       title: 'Estoque (Seminovos)',
-      description: 'Gerenciar os carros do estoque atual.',
-      link: '#', // Placeholder
+      description: 'Adicionar um veículo seminovo ao estoque.',
+      link: '/admin/add-estoque',
       icon: '📋'
     },
     {
       title: 'Reservas & Test Drive',
       description: 'Visualizar agendamentos e solicitações dos clientes.',
-      link: '#', // Placeholder
+      link: '#',
       icon: '📅'
     },
     {
       title: 'Financiamentos',
       description: 'Avaliar pedidos de simulação de financiamento.',
-      link: '#', // Placeholder
+      link: '#',
       icon: '💰'
     },
     {
       title: 'Colaboradores',
       description: 'Gerenciar contas da equipe e acessos.',
-      link: '#', // Placeholder
+      link: '#',
       icon: '👥'
     }
   ];

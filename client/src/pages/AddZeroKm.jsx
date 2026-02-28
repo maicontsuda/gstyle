@@ -9,6 +9,9 @@ export default function AddZeroKm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const [customModel, setCustomModel] = useState(false);
+  const [imageFiles, setImageFiles] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
 
   const [formData, setFormData] = useState({
     origin: 'Japonesa',
@@ -51,25 +54,38 @@ export default function AddZeroKm() {
     setSuccess('');
 
     try {
-      // Formata os campos arrays (colors e images separados por vírgula)
       const payload = { ...formData };
       payload.colors_available = payload.colors_available.split(',').map(c => c.trim()).filter(c => c);
-      payload.images = payload.images.split(',').map(i => i.trim()).filter(i => i);
+
+      // If files were selected, upload them first
+      if (imageFiles.length > 0) {
+        const uploadData = new FormData();
+        imageFiles.forEach(f => uploadData.append('images', f));
+        const uploadRes = await api.post('/upload', uploadData, { headers: { 'Content-Type': 'multipart/form-data' } });
+        const uploadedUrls = uploadRes.data.urls || [];
+        // Merge with any manual URL entries
+        const manualUrls = payload.images ? payload.images.split(',').map(i => i.trim()).filter(i => i) : [];
+        payload.images = [...manualUrls, ...uploadedUrls];
+      } else {
+        payload.images = payload.images ? payload.images.split(',').map(i => i.trim()).filter(i => i) : [];
+      }
       
       await api.post('/zerokm', payload);
       setSuccess('Veículo 0KM adicionado com sucesso!');
-      
-      // Reset after success
-      setFormData({
-        ...formData,
-        model: '', price: '', colors_available: '', images: '', engine: ''
-      });
-      
+      setFormData({ ...formData, model: '', price: '', colors_available: '', images: '', engine: '' });
+      setImageFiles([]);
+      setImagePreviews([]);
     } catch (err) {
       setError(err.response?.data?.error || 'Erro ao adicionar veículo.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleImageFilesChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImageFiles(files);
+    setImagePreviews(files.map(f => URL.createObjectURL(f)));
   };
 
   // Predefined Brands and Models categorized by origin
@@ -153,13 +169,26 @@ export default function AddZeroKm() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-semibold text-[var(--chrome-light)] mb-2">Modelo</label>
-                <select name="model" value={formData.model} onChange={handleChange} required disabled={!formData.brand} className="w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
-                  <option value="">Selecione o Modelo...</option>
-                  {formData.brand && carModels[formData.origin][formData.brand].map(m => (
-                    <option key={m} value={m}>{m}</option>
-                  ))}
-                </select>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="text-sm font-semibold text-[var(--chrome-light)]">Modelo</label>
+                  <button type="button" onClick={() => { setCustomModel(v => !v); setFormData(p => ({...p, model: ''})); }}
+                    className="text-xs text-[var(--chrome-dark)] hover:text-[var(--chrome-light)] underline transition-colors">
+                    {customModel ? '← Usar lista padrão' : '+ Digitar variação personalizada'}
+                  </button>
+                </div>
+                {customModel ? (
+                  <input type="text" name="model" value={formData.model} onChange={handleChange} required
+                    placeholder="Ex: Prius AX, RAV4 Hybrid 4WD..."
+                    className="w-full bg-[var(--bg-card2)] border border-[var(--chrome-dark)] border-dashed rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none" />
+                ) : (
+                  <select name="model" value={formData.model} onChange={handleChange} required disabled={!formData.brand}
+                    className="w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                    <option value="">Selecione o Modelo...</option>
+                    {formData.brand && carModels[formData.origin][formData.brand].map(m => (
+                      <option key={m} value={m}>{m}</option>
+                    ))}
+                  </select>
+                )}
               </div>
               
               <div>
@@ -220,8 +249,22 @@ export default function AddZeroKm() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-[var(--chrome-light)] mb-2">Links de Imagens (separados por vírgula)</label>
-              <textarea name="images" value={formData.images} onChange={handleChange} rows="3" placeholder="https://imagem1.jpg, https://imagem2.jpg" className="w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none resize-none"></textarea>
+              <label className="block text-sm font-semibold text-[var(--chrome-light)] mb-2">Fotos do Veículo</label>
+              <div className="bg-[var(--bg-card2)] border-2 border-dashed border-[var(--border)] hover:border-[var(--chrome-dark)] rounded-xl p-6 text-center transition-colors cursor-pointer group" onClick={() => document.getElementById('img-upload-0km').click()}>
+                <div className="text-3xl mb-2">📷</div>
+                <p className="text-sm text-[var(--text-muted)] group-hover:text-white transition-colors">Clique para selecionar fotos</p>
+                <p className="text-xs text-[var(--text-muted)] mt-1">JPG, PNG, WEBP — Múltiplos arquivos permitidos</p>
+                <input id="img-upload-0km" type="file" multiple accept="image/*" className="hidden" onChange={handleImageFilesChange} />
+              </div>
+              {imagePreviews.length > 0 && (
+                <div className="flex flex-wrap gap-3 mt-4">
+                  {imagePreviews.map((src, i) => (
+                    <img key={i} src={src} alt={`preview ${i}`} className="w-24 h-24 object-cover rounded-lg border border-[var(--border)]" />
+                  ))}
+                </div>
+              )}
+              <p className="text-xs text-[var(--text-muted)] mt-3">Ou cole URLs diretas de imagens (separadas por vírgula):</p>
+              <textarea name="images" value={formData.images} onChange={handleChange} rows="2" placeholder="https://imagem1.jpg, https://imagem2.jpg" className="mt-2 w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-4 py-3 text-white focus:border-[var(--chrome)] transition-colors outline-none resize-none text-sm"></textarea>
             </div>
 
             <div className="pt-4 border-t border-[var(--border)] flex justify-end gap-3">
