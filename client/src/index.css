@@ -4,21 +4,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
 
 :root {
-  --primary:     #ffffff;
-  --primary-hover: #cccccc;
-  --bg-deep:     #050505;
-  --bg-dark:     #0a0a0a;
-  --bg-card:     #111111;
-  --bg-card2:    #151515;
-  --border:      #262626;
-  --text:        #ffffff;
-  --text-muted:  #888888;
-  --text-light:  #dddddd;
-  --silver:      #a0a0a0;
-  --radius:      4px;
-  --radius-sm:   2px;
-  --shadow:      0 4px 20px rgba(0,0,0,0.8);
-  --shadow-primary: 0 0 15px rgba(255,255,255,0.05);
+  --gold:        #c9a84c;
+  --gold-light:  #e0c070;
+  --gold-dark:   #9a7a30;
+  --bg-deep:     #080808;
+  --bg-dark:     #111111;
+  --bg-card:     #181818;
+  --bg-card2:    #1e1e1e;
+  --border:      #2a2a2a;
+  --text:        #f0f0f0;
+  --text-muted:  #999999;
+  --text-light:  #cccccc;
+  --radius:      12px;
+  --radius-sm:   8px;
+  --shadow:      0 4px 24px rgba(0,0,0,0.5);
+  --shadow-gold: 0 0 20px rgba(201,168,76,0.15);
   --transition:  0.25s ease;
 }
 
@@ -28,26 +28,10 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: var(--bg-deep);
-  background-image: url('/logo-gstyle.png');
-  background-size: 800px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-blend-mode: overlay;
+  background: var(--bg-deep);
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
-  position: relative;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(5, 5, 5, 0.96); /* Escurece bastante o wallpaper pra ficar bem fraquinho */
-  z-index: -1;
-  pointer-events: none;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -64,7 +48,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
   color: var(--text);
   margin-bottom: 8px;
 }
-.section-title span { color: var(--silver); }
+.section-title span { color: var(--gold); }
 .section-sub { color: var(--text-muted); margin-bottom: 48px; font-size: 1rem; }
 
 /* ─── Buttons ─────────────────────────────── */
@@ -81,17 +65,17 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
   transition: all var(--transition);
 }
 .btn-primary {
-  background: var(--primary);
+  background: var(--gold);
   color: #000;
 }
-.btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,255,0.1); }
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
 
 .btn-outline {
   background: transparent;
-  color: var(--primary);
-  border: 1.5px solid var(--primary);
+  color: var(--gold);
+  border: 1.5px solid var(--gold);
 }
-.btn-outline:hover { background: var(--primary); color: #000; transform: translateY(-2px); }
+.btn-outline:hover { background: var(--gold); color: #000; transform: translateY(-2px); }
 
 .btn-ghost {
   background: rgba(255,255,255,0.06);
@@ -109,7 +93,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
   letter-spacing: .5px;
   text-transform: uppercase;
 }
-.badge-gold   { background: rgba(255,255,255,0.15); color: var(--primary); }
+.badge-gold   { background: rgba(201,168,76,0.15); color: var(--gold); }
 .badge-green  { background: rgba(34,197,94,0.12);  color: #4ade80; }
 .badge-blue   { background: rgba(59,130,246,0.12); color: #60a5fa; }
 
@@ -121,7 +105,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
   overflow: hidden;
   transition: all var(--transition);
 }
-.card:hover { transform: translateY(-4px); box-shadow: var(--shadow), var(--shadow-primary); border-color: rgba(255,255,255,0.25); }
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow), var(--shadow-gold); border-color: rgba(201,168,76,0.25); }
 
 /* ─── Forms ───────────────────────────────── */
 input, select, textarea {
@@ -137,7 +121,7 @@ input, select, textarea {
 }
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--gold);
 }
 label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px; }
 
@@ -156,7 +140,7 @@ label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bot
 .spinner {
   width: 40px; height: 40px;
   border: 3px solid var(--border);
-  border-top-color: var(--primary);
+  border-top-color: var(--gold);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 60px auto;
@@ -167,7 +151,7 @@ label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bot
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-dark); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--silver); }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
 
 /* ─── Page enter animation ────────────────── */
 .page-enter { animation: fadeUp 0.45s ease both; }
@@ -179,7 +163,7 @@ label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bot
 /* ─── Gold line accent ────────────────────── */
 .accent-line {
   width: 48px; height: 3px;
-  background: linear-gradient(90deg, var(--silver), transparent);
+  background: linear-gradient(90deg, var(--gold), transparent);
   border-radius: 2px;
   margin-bottom: 20px;
 }
