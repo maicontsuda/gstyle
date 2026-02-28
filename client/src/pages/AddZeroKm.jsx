@@ -26,7 +26,7 @@ export default function AddZeroKm() {
   });
 
   // Basic Protection
-  const isAdminOrDono = user && ['admin', 'dono'].includes(user.tipo_usuario);
+  const isAdminOrDono = user && ['admin', 'dono', 'gerente', 'funcionario'].includes(user.tipo_usuario);
   if (!isAdminOrDono) {
     return (
       <div className="pt-32 container text-center min-h-screen">

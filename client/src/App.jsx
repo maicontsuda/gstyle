@@ -15,6 +15,7 @@ import Aparencia from './pages/Aparencia';
 import ZeroKmHome from './pages/ZeroKmHome';
 import ZeroKmCars from './pages/ZeroKmCars';
 import AddZeroKm from './pages/AddZeroKm';
+import AdminDashboard from './pages/AdminDashboard';
 import './index.css';
 
 function Layout() {
@@ -37,6 +38,7 @@ function Layout() {
           <Route path="/auth/callback"  element={<AuthCallback />} />
           <Route path="/servicos"       element={<Servicos />} />
           <Route path="/site"           element={<Aparencia />} />
+          <Route path="/admin"          element={<AdminDashboard />} />
           <Route path="/admin/add-zerokm" element={<AddZeroKm />} />
         </Routes>
       </main>

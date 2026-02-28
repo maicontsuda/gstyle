@@ -44,8 +44,8 @@ export default function Navbar() {
               <img src={user.thumbnail} alt={user.username} className="navbar-avatar" />
               <div className="navbar-user-menu">
                 <Link to="/perfil">Meu Perfil</Link>
-                {user && ['admin', 'dono'].includes(user.tipo_usuario) && (
-                  <Link to="/admin/add-zerokm">Painel Admin (0KM)</Link>
+                {user && ['admin', 'dono', 'gerente', 'funcionario'].includes(user.tipo_usuario) && (
+                  <Link to="/admin">Painel Admin</Link>
                 )}
                 <button onClick={logout}>Sair</button>
               </div>
