@@ -133,7 +133,7 @@ export default function Veiculo() {
         <div className="veiculo-bottom-grid">
           <div className="financiamento-card card">
             <h2>💳 Simular Financiamento</h2>
-            <p className="fin-sub">Calcule as parcelas de forma rápida e transparente</p>
+            <p className="fin-sub">Taxas japonesas (APR ~4.9% a.a.) — Tabela Price</p>
 
             <div className="fin-fields">
               <div>
@@ -155,23 +155,23 @@ export default function Veiculo() {
             {simResult && (
               <div className="fin-result">
                 <div className="fin-row"><span>Valor financiado</span><strong>{formatPrice(simResult.valorFinanciado)}</strong></div>
-                <div className="fin-row highlight"><span>Parcela mensal</span><strong>{formatPrice(simResult.parcela)}</strong></div>
+                <div className="fin-row highlight"><span>Parcela mensal</span><strong>{formatPrice(simResult.parcelaMensal)}</strong></div>
                 <div className="fin-row"><span>Total a pagar</span><strong>{formatPrice(simResult.totalPago)}</strong></div>
                 <div className="fin-row"><span>Total de juros</span><strong>{formatPrice(simResult.totalJuros)}</strong></div>
-                <p className="fin-obs">*Simulação informativa. Taxa: {simResult.taxaMensal}% a.m.</p>
+                <p className="fin-obs">*Simulação informativa. Taxa APR: {simResult.taxaAnual}% a.a. ({simResult.taxaMensalUtilizada}% a.m.)</p>
               </div>
             )}
           </div>
 
           {/* Agendamento de Test Drive */}
           <div className="testdrive-card card">
-            <h2>🚗 Agendar Test Drive</h2>
-            <p className="fin-sub">Venha experimentar este veículo pessoalmente</p>
+            <h2>📅 Agendar sua Visita</h2>
+            <p className="fin-sub">Venha conhecer este veículo pessoalmente em nossa loja</p>
 
             {reservaOk ? (
               <div className="reserva-ok">
-                <p>✅ Test drive agendado com sucesso!</p>
-                <p className="fin-obs">Entraremos em contato para confirmar.</p>
+                <p>✅ Visita agendada com sucesso!</p>
+                <p className="fin-obs">Entraremos em contato para confirmar o horário.</p>
               </div>
             ) : (
               <form onSubmit={agendarTestDrive} className="fin-fields" style={{ flexDirection: 'column' }}>
@@ -197,7 +197,7 @@ export default function Veiculo() {
                 </div>
                 {reservaErro && <p style={{ color: '#f87171', fontSize: '0.85rem' }}>{reservaErro}</p>}
                 <button type="submit" className="btn btn-outline" style={{ width: '100%', justifyContent: 'center' }} disabled={reservaLoading}>
-                  {reservaLoading ? 'Agendando...' : user ? 'Confirmar agendamento' : 'Entrar para agendar'}
+                  {reservaLoading ? 'Agendando...' : user ? 'Confirmar visita' : 'Entrar para agendar'}
                 </button>
               </form>
             )}
