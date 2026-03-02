@@ -5,7 +5,8 @@ const TIPO_LABELS = { sedan: 'Sedan', suv: 'SUV', hatch: 'Hatch', pickup: 'Picku
 const COMB_LABELS = { gasolina: '⛽ Gasolina', etanol: '⛽ Etanol', flex: '⛽ Flex', diesel: '⛽ Diesel', eletrico: '⚡ Elétrico', hibrido: '⚡ Híbrido' };
 
 function formatPrice(v) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+  if (!v && v !== 0) return '—';
+  return '¥ ' + Number(v).toLocaleString('ja-JP');
 }
 
 function formatKm(km) {

@@ -5,7 +5,8 @@ import { useAuth } from '../context/AuthContext';
 import './Veiculo.css';
 
 function formatPrice(v) {
-  return v?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+  if (!v && v !== 0) return '—';
+  return '¥ ' + Number(v).toLocaleString('ja-JP');
 }
 function formatKm(km) { return km === 0 ? 'Zero km' : km?.toLocaleString('pt-BR') + ' km'; }
 
@@ -136,7 +137,7 @@ export default function Veiculo() {
 
             <div className="fin-fields">
               <div>
-                <label>Entrada (R$)</label>
+                <label>Entrada (¥)</label>
                 <input type="number" placeholder="0" value={entrada} onChange={e => setEntrada(e.target.value)} />
               </div>
               <div>
