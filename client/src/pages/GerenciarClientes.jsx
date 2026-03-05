@@ -111,7 +111,7 @@ export default function GerenciarClientes() {
     if (!file) return;
     setUploadingFoto(true);
     const formData = new FormData();
-    formData.append('imagens', file);
+    formData.append('images', file);
     try {
       const { data } = await api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
       const url = data.urls[0];
@@ -534,7 +534,7 @@ function AddAnexoForm({ clienteId, onSaved, showMsg }) {
       let url = form.url;
       if (file) {
         const fd = new FormData();
-        fd.append('imagens', file);
+        fd.append('images', file);
         const { data } = await api.post('/upload', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
         url = data.urls[0];
       }
