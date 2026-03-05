@@ -46,10 +46,16 @@ export default function AdminDashboard() {
       icon: '💰'
     },
     {
+      title: 'Gerenciar Clientes',
+      description: 'Gerencie clientes, veículos, parcelas, manutenções e rol de fotos.',
+      link: '/admin/clientes',
+      icon: '👥'
+    },
+    {
       title: 'Colaboradores',
       description: 'Gerenciar contas da equipe e acessos.',
       link: '#',
-      icon: '👥'
+      icon: '🧑‍💼'
     }
   ];
 

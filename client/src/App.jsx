@@ -17,6 +17,9 @@ import ZeroKmCars from './pages/ZeroKmCars';
 import AddZeroKm from './pages/AddZeroKm';
 import AddEstoque from './pages/AddEstoque';
 import AdminDashboard from './pages/AdminDashboard';
+import GerenciarClientes from './pages/GerenciarClientes';
+import RolDeClientes from './pages/RolDeClientes';
+import Comunidade from './pages/Comunidade';
 import './index.css';
 
 function Layout() {
@@ -42,6 +45,9 @@ function Layout() {
           <Route path="/admin"          element={<AdminDashboard />} />
           <Route path="/admin/add-zerokm" element={<AddZeroKm />} />
           <Route path="/admin/add-estoque" element={<AddEstoque />} />
+          <Route path="/admin/clientes" element={<GerenciarClientes />} />
+          <Route path="/rol-clientes" element={<RolDeClientes />} />
+          <Route path="/comunidade" element={<Comunidade />} />
         </Routes>
       </main>
       {!hideLayout && <Footer />}

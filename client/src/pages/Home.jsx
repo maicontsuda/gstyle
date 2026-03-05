@@ -2,36 +2,47 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
 import CarCard from '../components/CarCard';
+import ClientRollSlider from '../components/ClientRollSlider';
 import './Home.css';
 
-const SERVICOS_MOCKUP = [
-  { icone: '🔧', nome: 'Revisão Completa',    descricao: 'Verificação total do veículo com laudo técnico detalhado.' },
-  { icone: '💳', nome: 'Financiamento',        descricao: 'Simule e aprove seu financiamento com as melhores taxas do mercado.' },
-  { icone: '🔄', nome: 'Troca / Avaliação',   descricao: 'Traga seu veículo e receba uma avaliação justa na hora.' },
+// Retorna N itens aleatórios de um array
+function sortAleat(arr, n) {
+  if (!arr?.length) return [];
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
+
+const SERVICOS = [
+  { icone: '🔧', nome: 'Revisão Completa',    descricao: 'Verificação total do veículo com laudo técnico.' },
+  { icone: '💳', nome: 'Financiamento',        descricao: 'Simule e aprove seu financiamento com as melhores taxas japonesas.' },
+  { icone: '🔄', nome: 'Troca / Avaliação',   descricao: 'Traga seu veículo e receba avaliação justa na hora.' },
   { icone: '🛡️', nome: 'Garantia Estendida', descricao: 'Proteção completa pós-compra para sua tranquilidade.' },
-  { icone: '🚗', nome: 'Test Drive',           descricao: 'Agende um test drive e sinta a experiência antes de comprar.' },
+  { icone: '📅', nome: 'Agendar Visita',       descricao: 'Marque sua visita e conheça nossos veículos pessoalmente.' },
   { icone: '📋', nome: 'Documentação',         descricao: 'Nossa equipe cuida de toda a burocracia para você.' },
 ];
 
 export default function Home() {
-  const [destaques, setDestaques] = useState([]);
+  const [zerokm, setZerokm]     = useState([]);
+  const [seminovos, setSeminovos] = useState([]);
+  const [rolFotos, setRolFotos]  = useState([]);
+  const [posts, setPosts]        = useState([]);
   const [totalVeiculos, setTotalVeiculos] = useState('...');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading]    = useState(true);
 
   useEffect(() => {
     Promise.all([
-      api.get('/carros?destaque=true&limit=6'),
-      api.get('/carros?limit=1')
-    ])
-      .then(([resDestaques, resTotal]) => {
-        setDestaques(resDestaques.data.carros || []);
-        setTotalVeiculos(resTotal.data.total || 0);
-      })
-      .catch(() => {
-        setDestaques([]);
-        setTotalVeiculos(0);
-      })
-      .finally(() => setLoading(false));
+      api.get('/carros?status=zero_km&limit=20'),
+      api.get('/carros?status=semi_novo&limit=20'),
+      api.get('/carros?limit=1'),
+      api.get('/auth/rol-clientes').catch(() => ({ data: [] })),
+      api.get('/publicacoes').catch(() => ({ data: [] })),
+    ]).then(([rZero, rSemi, rTotal, rRol, rPosts]) => {
+      setZerokm(sortAleat(rZero.data.carros, 3));
+      setSeminovos(sortAleat(rSemi.data.carros, 3));
+      setTotalVeiculos((rTotal.data.total || 0));
+      setRolFotos(rRol.data.filter(f => f.url) || []);
+      setPosts(sortAleat(rPosts.data, 4));
+    }).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
   return (
@@ -52,7 +63,6 @@ export default function Home() {
             <Link to="/estoque" className="btn btn-primary">Ver Estoque</Link>
             <a href="#servicos" className="btn btn-ghost">Nossos Serviços</a>
           </div>
-
           <div className="hero-stats">
             <div className="hero-stat"><strong>{totalVeiculos}</strong><span>Veículos no estoque</span></div>
             <div className="hero-stat-divider" />
@@ -63,33 +73,90 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Destaques ── */}
+      {/* ── 3 Carros 0KM Aleatórios ── */}
       <section className="section">
         <div className="container">
           <div className="accent-line" />
-          <h2 className="section-title">Veículos em <span>Destaque</span></h2>
-          <p className="section-sub">Seleção especial curada pela nossa equipe</p>
-
-          {loading ? (
-            <div className="spinner" />
-          ) : destaques.length > 0 ? (
+          <h2 className="section-title">Carros <span>Zero KM</span></h2>
+          <p className="section-sub">Modelos novos direto do Japão — seleção aleatória do dia</p>
+          {loading ? <div className="spinner" /> : zerokm.length > 0 ? (
             <div className="grid-3">
-              {destaques.map(c => <CarCard key={c._id} carro={c} />)}
+              {zerokm.map(c => <CarCard key={c._id} carro={c} />)}
             </div>
           ) : (
-            <div className="empty-state">
-              <p>Nenhum veículo em destaque no momento.</p>
-              <Link to="/estoque" className="btn btn-outline" style={{ marginTop: 16 }}>Ver todo o estoque</Link>
-            </div>
+            <div className="empty-state"><p>Nenhum carro zero km no momento.</p></div>
           )}
-
-          {destaques.length > 0 && (
-            <div style={{ textAlign: 'center', marginTop: 40 }}>
-              <Link to="/estoque" className="btn btn-outline">Ver Todo o Estoque →</Link>
-            </div>
-          )}
+          <div style={{ textAlign: 'center', marginTop: 36 }}>
+            <Link to="/zero-km" className="btn btn-outline">Ver Catálogo 0KM →</Link>
+          </div>
         </div>
       </section>
+
+      {/* ── 3 Seminovos Aleatórios ── */}
+      <section className="section" style={{ background: 'var(--bg-dark)' }}>
+        <div className="container">
+          <div className="accent-line" />
+          <h2 className="section-title">Semi<span>novos</span></h2>
+          <p className="section-sub">Veículos seminovos selecionados — estoque atualizado diariamente</p>
+          {loading ? <div className="spinner" /> : seminovos.length > 0 ? (
+            <div className="grid-3">
+              {seminovos.map(c => <CarCard key={c._id} carro={c} />)}
+            </div>
+          ) : (
+            <div className="empty-state"><p>Nenhum seminovo disponível no momento.</p></div>
+          )}
+          <div style={{ textAlign: 'center', marginTop: 36 }}>
+            <Link to="/estoque?status=semi_novo" className="btn btn-outline">Ver Todos os Seminovos →</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Rol de Clientes (Slideshow) ── */}
+      {rolFotos.length > 0 && (
+        <section className="section rol-section">
+          <div className="container">
+            <div className="accent-line" />
+            <h2 className="section-title">Nossos <span>Clientes</span></h2>
+            <p className="section-sub">Momentos especiais das entregas G-Style</p>
+            <ClientRollSlider fotos={rolFotos} />
+          </div>
+        </section>
+      )}
+
+      {/* ── Posts da Rede Social ── */}
+      {posts.length > 0 && (
+        <section className="section">
+          <div className="container">
+            <div className="accent-line" />
+            <h2 className="section-title">Nossa <span>Comunidade</span></h2>
+            <p className="section-sub">Novidades e destaques das redes sociais</p>
+            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))' }}>
+              {posts.map(p => (
+                <div key={p._id} className="card post-card">
+                  {p.imagemUrl && (
+                    <div className="post-card-img">
+                      <img src={p.imagemUrl} alt={p.titulo} loading="lazy" />
+                    </div>
+                  )}
+                  <div className="post-card-body">
+                    <span className="post-card-tipo">{p.tipo}</span>
+                    <h3 className="post-card-titulo">{p.titulo}</h3>
+                    {p.descricao && <p className="post-card-desc">{p.descricao.substring(0, 100)}{p.descricao.length > 100 ? '...' : ''}</p>}
+                    {p.linkDestino && (
+                      <a href={p.linkDestino} target="_blank" rel="noreferrer" className="btn btn-outline" style={{ marginTop: 12, fontSize: '0.82rem' }}>
+                        Ver Post →
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ textAlign: 'center', marginTop: 32 }}>
+              <Link to="/comunidade" className="btn btn-outline">Ver Comunidade →</Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Serviços ── */}
       <section className="section servicos-section" id="servicos">
@@ -98,7 +165,7 @@ export default function Home() {
           <h2 className="section-title">Nossos <span>Serviços</span></h2>
           <p className="section-sub">Tudo o que você precisa em um só lugar</p>
           <div className="grid-3">
-            {SERVICOS_MOCKUP.map((s, i) => (
+            {SERVICOS.map((s, i) => (
               <div key={i} className="card servico-card">
                 <div className="servico-icon">{s.icone}</div>
                 <h3 className="servico-nome">{s.nome}</h3>
@@ -117,7 +184,7 @@ export default function Home() {
             <p>Entre em contato ou venha nos visitar. Nossa equipe está pronta para atendê-lo.</p>
             <div className="cta-actions">
               <Link to="/estoque" className="btn btn-primary">Explorar Estoque</Link>
-              <a href="https://wa.me/5511999999999" target="_blank" rel="noreferrer" className="btn btn-ghost">
+              <a href="https://wa.me/818097355956" target="_blank" rel="noreferrer" className="btn btn-ghost">
                 💬 WhatsApp
               </a>
             </div>

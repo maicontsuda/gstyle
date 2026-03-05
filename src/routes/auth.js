@@ -10,15 +10,11 @@ const roleMiddleware = (...roles) => (req, res, next) => {
   }
   next();
 };
-
 const User = require('../models/User');
 
-// @route  GET /api/auth/google
-// Inicia fluxo OAuth com Google
+// ── Google OAuth ─────────────────────────────────────────────────────────
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false }));
 
-// @route  GET /api/auth/google/callback
-// Callback após autenticação Google
 router.get('/google/callback',
   passport.authenticate('google', { session: false, failureRedirect: `${process.env.CLIENT_URL || 'http://localhost:5173'}/login?erro=auth` }),
   (req, res) => {
@@ -27,60 +23,21 @@ router.get('/google/callback',
   }
 );
 
-// @route  GET /api/auth/me
-// Retorna o usuário logado (requer token)
+// ── Usuário logado ────────────────────────────────────────────────────────
 router.get('/me', authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-__v');
     if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
-    
-    // Auto-promover o dono da loja se for a primeira vez
     if (user.email === 'maicontsuda@gmail.com' && user.tipo_usuario !== 'admin') {
       user.tipo_usuario = 'admin';
       await user.save();
     }
-    
     res.json(user);
   } catch (err) {
     res.status(500).json({ error: 'Erro ao buscar usuário.' });
   }
 });
 
-// @route  GET /api/auth/rol-clientes
-// Retorna publicamente as fotos de entrega e posts de redes sociais (anônimo) dos clientes que ativaram o rol
-router.get('/rol-clientes', async (req, res) => {
-  try {
-    const clientes = await User.find({ 'rolCliente.visivel': true }).select('anexos');
-    
-    let galeria = [];
-    clientes.forEach(cliente => {
-      if (cliente.anexos && cliente.anexos.length > 0) {
-        const fotosEPosts = cliente.anexos.filter(a => a.tipo === 'foto' || a.tipo === 'post_social');
-        galeria.push(...fotosEPosts);
-      }
-    });
-
-    // Ordenar do mais recente para o mais antigo
-    galeria.sort((a, b) => new Date(b.dataAdicao) - new Date(a.dataAdicao));
-
-    res.json(galeria);
-  } catch (err) {
-    res.status(500).json({ error: 'Erro ao carregar a galeria de clientes.' });
-  }
-});
-
-// @route  GET /api/auth/users
-// Retorna todos os usuários (Apenas para admin/dono/funcionario)
-router.get('/users', authMiddleware, roleMiddleware('admin', 'dono', 'funcionario'), async (req, res) => {
-  try {
-    const users = await User.find().select('-password -__v').sort({ createdAt: -1 });
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: 'Erro ao buscar usuários.' });
-  }
-});
-
-// @route  PATCH /api/auth/me — Atualiza telefone e endereço do usuário logado
 router.patch('/me', authMiddleware, async (req, res) => {
   try {
     const { telefone, endereco } = req.body;
@@ -99,13 +56,46 @@ router.patch('/me', authMiddleware, async (req, res) => {
   }
 });
 
-// @route  PATCH /api/auth/me/rol — Permite ao cliente ativar/desativar sua exibição no Rol
+// ── Rol de Clientes (Público) ─────────────────────────────────────────────
+router.get('/rol-clientes', async (req, res) => {
+  try {
+    const clientes = await User.find({ 'rolCliente.visivel': true })
+      .select('anexos rolCliente username thumbnail createdAt');
+
+    let galeria = [];
+    clientes.forEach(cliente => {
+      // Foto de entrega (quando cliente marcou como pública)
+      if (cliente.rolCliente?.fotoEntrega && cliente.rolCliente?.fotoPublica) {
+        galeria.push({
+          _id: `${cliente._id}_entrega`,
+          tipo: 'foto',
+          url: cliente.rolCliente.fotoEntrega,
+          titulo: `Entrega — ${cliente.username || 'Cliente'}`,
+          descricao: cliente.rolCliente.depoimento || '',
+          dataAdicao: cliente.createdAt || new Date(),
+          isEntrega: true,
+        });
+      }
+      // Outros anexos (foto/post_social)
+      if (cliente.anexos?.length > 0) {
+        const fotosEPosts = cliente.anexos.filter(a => a.tipo === 'foto' || a.tipo === 'post_social');
+        galeria.push(...fotosEPosts);
+      }
+    });
+
+    galeria.sort((a, b) => new Date(b.dataAdicao) - new Date(a.dataAdicao));
+    res.json(galeria);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao carregar a galeria de clientes.' });
+  }
+});
+
+// ── Gerenciamento do próprio Rol (cliente) ───────────────────────────────
 router.patch('/me/rol', authMiddleware, async (req, res) => {
   try {
     const { visivel } = req.body;
     const updates = {};
     if (visivel !== undefined) updates['rolCliente.visivel'] = visivel;
-
     const user = await User.findByIdAndUpdate(req.user.id, updates, { new: true }).select('-__v');
     res.json(user);
   } catch (err) {
@@ -113,12 +103,56 @@ router.patch('/me/rol', authMiddleware, async (req, res) => {
   }
 });
 
-// @route  PATCH /api/auth/users/:id/anexos — Admin adiciona contratos/fotos/posts no perfil
-router.patch('/users/:id/anexos', authMiddleware, roleMiddleware('admin', 'dono', 'funcionario'), async (req, res) => {
+router.patch('/me/rol-foto', authMiddleware, async (req, res) => {
+  try {
+    const { fotoPublica, visivel } = req.body;
+    const updates = {};
+    if (fotoPublica !== undefined) updates['rolCliente.fotoPublica'] = fotoPublica;
+    if (visivel !== undefined)     updates['rolCliente.visivel']     = visivel;
+    const user = await User.findByIdAndUpdate(req.user.id, updates, { new: true }).select('-__v');
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// ── Admin: Listar e gerenciar usuários ────────────────────────────────────
+router.get('/users', authMiddleware, roleMiddleware('admin', 'dono', 'gerente', 'funcionario'), async (req, res) => {
+  try {
+    const users = await User.find().select('-password -__v').sort({ createdAt: -1 });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao buscar usuários.' });
+  }
+});
+
+// @route  GET /api/auth/users/:id — Admin busca cliente específico
+router.get('/users/:id', authMiddleware, roleMiddleware('admin', 'dono', 'gerente', 'funcionario'), async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select('-__v');
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao buscar usuário.' });
+  }
+});
+
+// @route  PATCH /api/auth/users/:id/tipo — Admin muda role
+router.patch('/users/:id/tipo', authMiddleware, roleMiddleware('admin', 'dono'), async (req, res) => {
+  try {
+    const { tipo_usuario } = req.body;
+    const user = await User.findByIdAndUpdate(req.params.id, { tipo_usuario }, { new: true }).select('-__v');
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// @route  PATCH /api/auth/users/:id/anexos — Admin adiciona contratos/fotos/posts
+router.patch('/users/:id/anexos', authMiddleware, roleMiddleware('admin', 'dono', 'gerente', 'funcionario'), async (req, res) => {
   try {
     const { anexos } = req.body;
-    
-    // Suporta envio legado (1 anexo no body) ou o novo formato (lista 'anexos' no body)
     let novosAnexos = [];
     if (anexos && Array.isArray(anexos)) {
       novosAnexos = anexos.map(a => ({ ...a, dataAdicao: new Date() }));
@@ -127,15 +161,12 @@ router.patch('/users/:id/anexos', authMiddleware, roleMiddleware('admin', 'dono'
       if (!tipo || !titulo || !url) return res.status(400).json({ error: 'Dados insuficientes.' });
       novosAnexos = [{ tipo, titulo, url, descricao, dataAdicao: new Date() }];
     }
-
     if (novosAnexos.length === 0) return res.status(400).json({ error: 'Nenhum anexo fornecido.' });
-
     const user = await User.findByIdAndUpdate(
       req.params.id,
       { $push: { anexos: { $each: novosAnexos } } },
       { new: true }
     ).select('-__v');
-
     if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
     res.json(user);
   } catch (err) {
@@ -143,7 +174,101 @@ router.patch('/users/:id/anexos', authMiddleware, roleMiddleware('admin', 'dono'
   }
 });
 
-// @route  GET /api/auth/logout
+// @route  DELETE /api/auth/users/:id/anexos/:aid — Admin remove anexo
+router.delete('/users/:id/anexos/:aid', authMiddleware, roleMiddleware('admin', 'dono', 'gerente', 'funcionario'), async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $pull: { anexos: { _id: req.params.aid } } },
+      { new: true }
+    ).select('-__v');
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao remover anexo.' });
+  }
+});
+
+// @route  PATCH /api/auth/users/:id/veiculo — Admin salva info do carro
+router.patch('/users/:id/veiculo', authMiddleware, roleMiddleware('admin', 'dono', 'gerente', 'funcionario'), async (req, res) => {
+  try {
+    const updates = {};
+    ['marca','modelo','ano','cor','placa','chassi','shakenVencimento','observacoes']
+      .forEach(c => { if (req.body[c] !== undefined) updates[`veiculo.${c}`] = req.body[c]; });
+    const user = await User.findByIdAndUpdate(req.params.id, updates, { new: true }).select('-__v');
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    res.json(user);
+  } catch (err) { res.status(400).json({ error: err.message }); }
+});
+
+// @route  PATCH /api/auth/users/:id/financiamento — Admin salva parcelas
+router.patch('/users/:id/financiamento', authMiddleware, roleMiddleware('admin', 'dono', 'gerente', 'funcionario'), async (req, res) => {
+  try {
+    const updates = {};
+    ['totalParcelas','parcelasPagas','valorParcela','dataInicio','observacoes']
+      .forEach(c => { if (req.body[c] !== undefined) updates[`financiamento.${c}`] = req.body[c]; });
+    const user = await User.findByIdAndUpdate(req.params.id, updates, { new: true }).select('-__v');
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    res.json(user);
+  } catch (err) { res.status(400).json({ error: err.message }); }
+});
+
+// @route  POST /api/auth/users/:id/manutencao — Admin adiciona registro
+router.post('/users/:id/manutencao', authMiddleware, roleMiddleware('admin', 'dono', 'gerente', 'funcionario'), async (req, res) => {
+  try {
+    const { tipo, data, kmAtual, kmProxima, dataProxima, observacoes } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $push: { manutencao: { tipo, data, kmAtual, kmProxima, dataProxima, observacoes, registradoPor: req.user.email } } },
+      { new: true }
+    ).select('-__v');
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    res.json(user);
+  } catch (err) { res.status(400).json({ error: err.message }); }
+});
+
+// @route  DELETE /api/auth/users/:id/manutencao/:mid — Remove registro de manutenção
+router.delete('/users/:id/manutencao/:mid', authMiddleware, roleMiddleware('admin', 'dono', 'gerente', 'funcionario'), async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $pull: { manutencao: { _id: req.params.mid } } },
+      { new: true }
+    ).select('-__v');
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    res.json(user);
+  } catch (err) { res.status(400).json({ error: err.message }); }
+});
+
+// @route  POST /api/auth/users/:id/lembrete — Admin adiciona lembrete
+router.post('/users/:id/lembrete', authMiddleware, roleMiddleware('admin', 'dono', 'gerente', 'funcionario'), async (req, res) => {
+  try {
+    const { tipo, mensagem } = req.body;
+    if (!mensagem) return res.status(400).json({ error: 'Mensagem obrigatória.' });
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $push: { lembretes: { tipo, mensagem, dataEnvio: new Date(), enviado: false } } },
+      { new: true }
+    ).select('-__v');
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    res.json(user);
+  } catch (err) { res.status(400).json({ error: err.message }); }
+});
+
+// @route  PATCH /api/auth/users/:id/rol-foto — Admin sobe foto de entrega das chaves
+router.patch('/users/:id/rol-foto', authMiddleware, roleMiddleware('admin', 'dono', 'gerente', 'funcionario'), async (req, res) => {
+  try {
+    const { fotoEntrega, depoimento } = req.body;
+    const updates = {};
+    if (fotoEntrega !== undefined) updates['rolCliente.fotoEntrega'] = fotoEntrega;
+    if (depoimento !== undefined)  updates['rolCliente.depoimento']  = depoimento;
+    const user = await User.findByIdAndUpdate(req.params.id, updates, { new: true }).select('-__v');
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    res.json(user);
+  } catch (err) { res.status(400).json({ error: err.message }); }
+});
+
+// ── Logout ────────────────────────────────────────────────────────────────
 router.get('/logout', (req, res) => {
   res.json({ message: 'Logout realizado com sucesso.' });
 });
