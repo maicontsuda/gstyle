@@ -195,11 +195,29 @@ export default function GerenciarClientes() {
               {/* Topo do drawer */}
               <div className="p-5 border-b border-[var(--border)] flex items-center gap-4 bg-black/20">
                 <img src={selecionado.thumbnail || `https://api.dicebear.com/7.x/initials/svg?seed=${selecionado.username}`} className="w-12 h-12 rounded-full ring-2 ring-[var(--chrome)]" alt="" />
-                <div>
+                <div className="flex-1">
                   <h2 className="text-xl font-bold text-white">{selecionado.username}</h2>
-                  <p className="text-sm text-[var(--text-muted)]">{selecionado.email} • <span className="capitalize">{selecionado.tipo_usuario}</span></p>
+                  <p className="text-sm text-[var(--text-muted)] mb-2">{selecionado.email}</p>
+                  <select
+                    value={selecionado.tipo_usuario}
+                    onChange={async (e) => {
+                      try {
+                        const { data } = await api.patch(`/auth/users/${selecionado._id}/tipo`, { tipo_usuario: e.target.value });
+                        setSelecionado(data);
+                        setClientes(prev => prev.map(c => c._id === data._id ? data : c));
+                        showMsg('✅ Papel atualizado!');
+                      } catch { showMsg('❌ Erro ao atualizar.'); }
+                    }}
+                    className="bg-[var(--bg-card2)] border border-[var(--border)] rounded-lg px-3 py-1.5 text-sm text-white outline-none cursor-pointer focus:border-[var(--chrome)] capitalize"
+                  >
+                    <option value="cliente">👤 Cliente</option>
+                    <option value="funcionario">🧑‍💼 Funcionário</option>
+                    <option value="gerente">📋 Gerente</option>
+                    <option value="dono">👑 Dono</option>
+                    <option value="admin">🔒 Admin</option>
+                  </select>
                 </div>
-                {msg && <span className="ml-auto text-sm font-semibold text-[var(--chrome-light)]">{msg}</span>}
+                {msg && <span className="ml-auto text-sm font-semibold text-[var(--chrome-light)] shrink-0">{msg}</span>}
               </div>
 
               {/* Tabs */}
