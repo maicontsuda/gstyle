@@ -14,7 +14,7 @@ export const ThemeProvider = ({ children }) => {
     // Remove all previous theme classes
     document.body.classList.remove(
       'theme-original', 'theme-dark-chrome', 'theme-cyberpunk', 'theme-titanium',
-      'theme-natal', 'theme-halloween', 'theme-ano-novo', 'theme-black-friday', 'theme-aniversario'
+      'theme-natal', 'theme-halloween', 'theme-ano-novo', 'theme-black-friday', 'theme-aniversario', 'theme-sakura'
     );
     // Add current theme class
     document.body.classList.add(theme);

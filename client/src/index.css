@@ -284,24 +284,36 @@ body.theme-titanium .card {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* 4. Especial: Natal (Christmas) */
+/* 4. Especial: Natal (Christmas) - Gold & Green/Red inverted */
 body.theme-natal {
-  --bg-deep:     #0b1610; /* Verde bem escuro */
+  --bg-deep:     #0b1610; 
   --bg-dark:     #0d1d14;
   --bg-card:     #122a1c;
   --bg-card2:    #183b26;
-  --border:      #a21e21; /* Vermelho escuro */
+  --border:      #a21e21; 
   
-  --chrome:        #ffb52e; /* Dourado */
-  --chrome-light:  #ffd56b;
-  --chrome-dark:   #cc2427; /* Vermelho Vivo */
+  --chrome:        #a21e21; /* Vermelho no lugar do dourado base */
+  --chrome-light:  #188a38; /* Verde brilhante */
+  --chrome-dark:   #681113; /* Vermelho escuro */
   
   --text:        #fcfdfd;
   --text-muted:  #a1c0b1;
-  --shadow-chrome: 0 8px 30px rgba(255, 181, 46, 0.3);
+  --shadow-chrome: 0 8px 30px rgba(255, 215, 0, 0.4); /* Brilho dourado */
 }
-body.theme-natal .btn-primary { background: linear-gradient(135deg, #ffb52e, #cc2427); color: #fff; border: none; }
-body.theme-natal .accent-line { background: linear-gradient(90deg, #ffb52e, #cc2427, transparent); }
+body.theme-natal .section-title span {
+  background: linear-gradient(135deg, #ffe57f, #ffd700, #ffc107);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+body.theme-natal .btn-primary { 
+  background: linear-gradient(135deg, #a21e21, #681113); 
+  color: #ffd700; 
+  border: 1px solid #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); 
+}
+body.theme-natal .accent-line { background: linear-gradient(90deg, #ffd700, #ffc107, transparent); }
 
 /* 5. Especial: Halloween */
 body.theme-halloween {
@@ -376,3 +388,67 @@ body.theme-aniversario {
 }
 body.theme-aniversario .btn-primary { background: linear-gradient(135deg, #ffbdf5, #ff49aa); color: #000; box-shadow: 0 4px 15px rgba(255, 73, 170, 0.4); }
 body.theme-aniversario .accent-line { background: linear-gradient(90deg, #ffbdf5, #ff49aa, transparent); }
+
+/* 9. Especial: Sakura (Primavera no Japão) */
+body.theme-sakura {
+  --bg-deep:     #170b12; 
+  --bg-dark:     #1f1019;
+  --bg-card:     #2b1824;
+  --bg-card2:    #36202e;
+  --border:      #ffb8d9; 
+  
+  --chrome:        #ff8ebf; 
+  --chrome-light:  #ffe6f2; 
+  --chrome-dark:   #c94c87; 
+  
+  --text:        #fff2f7;
+  --text-muted:  #e0b4cb;
+  --shadow-chrome: 0 0 25px rgba(255, 142, 191, 0.35);
+}
+body.theme-sakura .btn-primary { 
+  background: linear-gradient(135deg, #ffb8d9, #ff8ebf); 
+  color: #3b0922; 
+  box-shadow: 0 4px 15px rgba(255, 142, 191, 0.4); 
+}
+body.theme-sakura .accent-line { background: linear-gradient(90deg, #ffe6f2, #ff8ebf, transparent); }
+
+/* --- Particles --- */
+/* Sakura Petals */
+.sakura-petal {
+  position: fixed;
+  top: -10vh;
+  background: linear-gradient(135deg, #ffb8d9, #ffe6f2);
+  border-radius: 15px 0 15px 0;
+  box-shadow: 0 0 8px rgba(255, 184, 217, 0.6);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 9999;
+  animation: fall-sakura linear infinite;
+}
+
+@keyframes fall-sakura {
+  0% { transform: translate3d(vw, 0, 0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 0.8; }
+  100% { transform: translate3d(calc(var(--end-x) * 1vw), 110vh, 0) rotate(var(--end-rot)); opacity: 0; }
+}
+
+/* Snow Flakes */
+.snow-flake {
+  position: fixed;
+  top: -10vh;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.8);
+  font-size: 1.2rem;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 9999;
+  animation: fall-snow linear infinite;
+}
+
+@keyframes fall-snow {
+  0% { transform: translate3d(vw, 0, 0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  80% { opacity: 0.7; }
+  100% { transform: translate3d(calc(var(--end-x) * 1vw), 110vh, 0) rotate(360deg); opacity: 0; }
+}

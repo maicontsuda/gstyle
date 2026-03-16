@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -24,13 +24,16 @@ import AdminAddPublicacao from './pages/AdminAddPublicacao';
 import AdminCarrosPage from './pages/AdminCarrosPage';
 import EditCarro from './pages/EditCarro';
 import Contato from './pages/Contato';
+import Particles from './components/Particles';
 import './index.css';
 
 function Layout() {
+  const { theme } = useTheme();
   const location = useLocation();
   const hideLayout = ['/login'].includes(location.pathname);
   return (
     <>
+      <Particles theme={theme} />
       {!hideLayout && <Navbar />}
       <main>
         <Routes>
