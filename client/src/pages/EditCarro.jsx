@@ -178,12 +178,23 @@ export default function EditCarro() {
   const equipamentosList = [
     'Ar Condicionado', 'Direção Hidráulica', 'Vidros Elétricos', 'Travas Elétricas',
     'Teto Solar', 'Bancos de Couro', 'Bancos Elétricos', 'Aquecimento de Bancos',
-    'Navegação GPS', 'Apple CarPlay / Android Auto', 'Bluetooth', 'Câmera de Ré',
-    'Sensores de Estacionamento', 'Câmera 360', 'Airbag', 'Freios ABS',
-    'Controle de Estabilidade', 'Alerta de Ponto Cego', 'Assistente de Faixa',
-    'Piloto Automático', 'Frenagem de Emergência', 'Faróis de LED', 'Faróis de Neblina',
+    'Navegação GPS', 'Navi Original', 'Apple CarPlay', 'Android Auto', 'Bluetooth',
+    'Câmera de Ré', 'Camera Record (Dashcam)', 'Sensores de Estacionamento', 'Câmera 360',
+    'Airbag', 'Freios ABS', 'Controle de Estabilidade', 'Alerta de Ponto Cego',
+    'Assistente de Faixa', 'Piloto Automático', 'Frenagem de Emergência',
+    'Faróis de LED', 'Faróis de Neblina',
     'Rodas de Liga Leve', 'Comando de Som no Volante', 'Chave Presencial', 'Sistema Start-Stop', 'ETC'
   ];
+
+  const aquecimentoOpcoes = ['Dianteiros', 'Traseiros', 'Todos'];
+  const handleAquecimentoToggle = (opcao) => {
+    const tag = `Aquecimento de Bancos - ${opcao}`;
+    setForm(prev => {
+      const eq = prev.equipamentos || [];
+      if (eq.includes(tag)) return { ...prev, equipamentos: eq.filter(e => e !== tag) };
+      return { ...prev, equipamentos: [...eq, tag] };
+    });
+  };
 
   const handleEquipamentoToggle = (item) => {
     setForm(prev => {
@@ -477,33 +488,61 @@ export default function EditCarro() {
               <h3 className="font-semibold text-[var(--chrome-light)] text-sm uppercase tracking-wider">⚙️ Equipamentos / Opcionais</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '8px', marginTop: '8px' }}>
                 {equipamentosList.map(eq => (
-                  <label key={eq} style={{
-                    display: 'flex', alignItems: 'center', gap: '10px',
-                    cursor: 'pointer', padding: '8px 10px', borderRadius: '8px',
-                    background: form.equipamentos?.includes(eq) ? 'rgba(200,205,212,0.1)' : 'rgba(255,255,255,0.03)',
-                    border: form.equipamentos?.includes(eq) ? '1px solid rgba(200,205,212,0.4)' : '1px solid rgba(255,255,255,0.06)',
-                    transition: 'all 0.2s',
-                  }}>
-                    <input
-                      type="checkbox"
-                      checked={form.equipamentos?.includes(eq) || false}
-                      onChange={() => handleEquipamentoToggle(eq)}
-                      style={{ width: '16px', height: '16px', accentColor: 'var(--chrome)', cursor: 'pointer', flexShrink: 0 }}
-                    />
-                    <span style={{ fontSize: '0.82rem', color: form.equipamentos?.includes(eq) ? 'var(--chrome-light)' : 'var(--text-muted)', userSelect: 'none', lineHeight: 1.3 }}>
-                      {eq}
-                    </span>
-                  </label>
+                  <div key={eq}>
+                    <label style={{
+                      display: 'flex', alignItems: 'center', gap: '10px',
+                      cursor: 'pointer', padding: '8px 10px', borderRadius: '8px',
+                      background: form.equipamentos?.includes(eq) ? 'rgba(200,205,212,0.1)' : 'rgba(255,255,255,0.03)',
+                      border: form.equipamentos?.includes(eq) ? '1px solid rgba(200,205,212,0.4)' : '1px solid rgba(255,255,255,0.06)',
+                      transition: 'all 0.2s',
+                    }}>
+                      <input
+                        type="checkbox"
+                        checked={form.equipamentos?.includes(eq) || false}
+                        onChange={() => handleEquipamentoToggle(eq)}
+                        style={{ width: '16px', height: '16px', accentColor: 'var(--chrome)', cursor: 'pointer', flexShrink: 0 }}
+                      />
+                      <span style={{ fontSize: '0.82rem', color: form.equipamentos?.includes(eq) ? 'var(--chrome-light)' : 'var(--text-muted)', userSelect: 'none', lineHeight: 1.3 }}>
+                        {eq}
+                      </span>
+                    </label>
+
+                    {eq === 'Aquecimento de Bancos' && form.equipamentos?.includes('Aquecimento de Bancos') && (
+                      <div style={{ marginTop: '6px', marginLeft: '12px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                        <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: '3px' }}>Qual banco tem aquecimento?</p>
+                        {aquecimentoOpcoes.map(opcao => {
+                          const tag = `Aquecimento de Bancos - ${opcao}`;
+                          const checked = form.equipamentos?.includes(tag) || false;
+                          return (
+                            <label key={opcao} style={{
+                              display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer',
+                              padding: '5px 8px', borderRadius: '6px',
+                              background: checked ? 'rgba(200,205,212,0.08)' : 'rgba(255,255,255,0.02)',
+                              border: checked ? '1px solid rgba(200,205,212,0.3)' : '1px solid rgba(255,255,255,0.04)',
+                            }}>
+                              <input
+                                type="checkbox"
+                                checked={checked}
+                                onChange={() => handleAquecimentoToggle(opcao)}
+                                style={{ width: '13px', height: '13px', accentColor: 'var(--chrome)', cursor: 'pointer' }}
+                              />
+                              <span style={{ fontSize: '0.78rem', color: checked ? 'var(--chrome-light)' : 'var(--text-muted)' }}>{opcao}</span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
-              {form.equipamentos && form.equipamentos.filter(eq => !equipamentosList.includes(eq)).length > 0 && (
-                <div className="mt-4 pt-4 border-t border-[var(--chrome-dark)]/30">
-                  <span className="text-xs text-[var(--chrome-normal)] block mb-2">Outros opcionais cadastrados:</span>
-                  <div className="flex flex-wrap gap-2">
-                    {form.equipamentos.filter(eq => !equipamentosList.includes(eq)).map(eq => (
-                      <span key={eq} className="bg-[var(--bg-card2)] border border-[var(--chrome-dark)] px-3 py-1 rounded-md text-xs flex items-center gap-2">
+              {form.equipamentos && form.equipamentos.filter(eq => !equipamentosList.includes(eq) && !aquecimentoOpcoes.map(o => `Aquecimento de Bancos - ${o}`).includes(eq)).length > 0 && (
+                <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: '1px solid rgba(138,144,153,0.2)' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--chrome-dark)', display: 'block', marginBottom: '8px' }}>Outros opcionais cadastrados:</span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {form.equipamentos.filter(eq => !equipamentosList.includes(eq) && !aquecimentoOpcoes.map(o => `Aquecimento de Bancos - ${o}`).includes(eq)).map(eq => (
+                      <span key={eq} style={{ background: 'var(--bg-card2)', border: '1px solid var(--chrome-dark)', padding: '3px 10px', borderRadius: '6px', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
                         {eq}
-                        <button type="button" onClick={() => handleEquipamentoToggle(eq)} className="text-red-400 hover:text-red-300 font-bold">&times;</button>
+                        <button type="button" onClick={() => handleEquipamentoToggle(eq)} style={{ color: '#f87171', fontWeight: 'bold', background: 'none', border: 'none', cursor: 'pointer' }}>×</button>
                       </span>
                     ))}
                   </div>
