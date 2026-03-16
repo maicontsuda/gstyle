@@ -724,16 +724,22 @@ export default function AddEstoque() {
               <h3 className="font-semibold text-[var(--chrome-light)] text-sm uppercase tracking-wider">⚙️ Equipamentos / Opcionais</h3>
               <p className="text-xs text-[var(--text-muted)]">Itens detectados do Goo-net serão marcados automaticamente. Clique para alterar.</p>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '8px', marginTop: '8px' }}>
                 {equipamentosList.map(eq => (
-                  <label key={eq} className="flex items-center gap-3 cursor-pointer group bg-black/20 hover:bg-black/40 p-2.5 rounded-lg border border-transparent hover:border-[var(--border)] transition-all">
-                    <input 
-                      type="checkbox" 
-                      checked={formData.equipamentos.includes(eq)} 
+                  <label key={eq} style={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    cursor: 'pointer', padding: '8px 10px', borderRadius: '8px',
+                    background: formData.equipamentos.includes(eq) ? 'rgba(200,205,212,0.1)' : 'rgba(255,255,255,0.03)',
+                    border: formData.equipamentos.includes(eq) ? '1px solid rgba(200,205,212,0.4)' : '1px solid rgba(255,255,255,0.06)',
+                    transition: 'all 0.2s',
+                  }}>
+                    <input
+                      type="checkbox"
+                      checked={formData.equipamentos.includes(eq)}
                       onChange={() => handleEquipamentoToggle(eq)}
-                      className="w-4 h-4 accent-[var(--chrome)] cursor-pointer"
+                      style={{ width: '16px', height: '16px', accentColor: 'var(--chrome)', cursor: 'pointer', flexShrink: 0 }}
                     />
-                    <span className={`text-sm select-none transition-colors ${formData.equipamentos.includes(eq) ? 'text-white font-medium' : 'text-[var(--text-muted)] group-hover:text-[var(--chrome-light)]'}`}>
+                    <span style={{ fontSize: '0.82rem', color: formData.equipamentos.includes(eq) ? 'var(--chrome-light)' : 'var(--text-muted)', userSelect: 'none', lineHeight: 1.3 }}>
                       {eq}
                     </span>
                   </label>
