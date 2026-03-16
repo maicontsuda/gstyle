@@ -2,13 +2,14 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/User');
 
 module.exports = (passport) => {
-    passport.use(
-        new GoogleStrategy({
-            clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/auth/google/callback`,
-            proxy: true,
-        }, async (accessToken, refreshToken, profile, done) => {
+    if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+        passport.use(
+            new GoogleStrategy({
+                clientID: process.env.GOOGLE_CLIENT_ID,
+                clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+                callbackURL: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/auth/google/callback`,
+                proxy: true,
+            }, async (accessToken, refreshToken, profile, done) => {
             try {
                 // Check if user already exists in our db
                 let user = await User.findOne({ googleId: profile.id });
@@ -30,7 +31,8 @@ module.exports = (passport) => {
                 done(err, null);
             }
         })
-    );
+        );
+    }
 
     passport.serializeUser((user, done) => {
         done(null, user.id);
