@@ -30,10 +30,10 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Contato</h4>
             <ul>
-              <li>📍 Av. das Nações, 1200 – São Paulo, SP</li>
+              <li>📍 5 Chome-14-2 Showabashitori<br/>Nakagawa Ward, Nagoya, Aichi 454-0852</li>
               <li>📞 (11) 9 9999-9999</li>
               <li>✉️ contato@gstyle.com.br</li>
-              <li>🕒 Seg–Sáb: 9h–18h</li>
+              <li>🕒 Seg–Sáb: 10h–19h</li>
             </ul>
           </div>
         </div>

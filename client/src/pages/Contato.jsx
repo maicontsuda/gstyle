@@ -156,10 +156,10 @@ export default function Contato() {
             <div className="info-card">
               <div className="info-icon">📍</div>
               <div style={{flex:1}}>
-                <h3>Endereço</h3>
-                <p>Av. das Nações, 1200 – São Paulo, SP</p>
+                <p>5 Chome-14-2 Showabashitori, Nakagawa Ward</p>
+                <p style={{fontSize: '0.9em', color: 'var(--text-muted)'}}>Nagoya, Aichi 454-0852</p>
                 <a
-                  href={config.enderecoLink || 'https://maps.google.com'}
+                  href={config.enderecoLink || 'https://maps.app.goo.gl/search/4VF6+MM+Nagoia,+Aichi'}
                   target="_blank" rel="noreferrer"
                   className="info-link-btn"
                 >
