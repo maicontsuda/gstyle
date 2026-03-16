@@ -33,6 +33,20 @@ const carroSchema = new mongoose.Schema({
     defeitos:       { type: String, default: '' },
     modificacoes:   { type: String, default: '' },
     informacoes_adicionais: { type: String, default: '' },
+    
+    // Novas categorias no estilo Goo-net
+    comprimento:    { type: Number, default: null },   // em mm
+    largura:        { type: Number, default: null },   // em mm
+    altura:         { type: Number, default: null },   // em mm
+    peso:           { type: Number, default: null },   // em kg
+    wltcConsumo:    { type: String, default: '' },     // ex: "15.0km/L"
+    jc08Consumo:    { type: String, default: '' },     // ex: "19.2km/L"
+    chassiCodigo:   { type: String, default: '' },     // ex: "DAA-AWS210"
+    equipamentosGerais: { type: [String], default: [] }, // Array de strings com nomes dos equipamentos
+    avaliacaoExterna: { type: Number, default: null }, // Nota de 1 a 5
+    avaliacaoInterna: { type: Number, default: null }, // Nota de 1 a 5
+    estadoMecanico: { type: String, default: 'Normal' }, // ex: "Normal", "Precisa de reparo"
+
     isVendido:      { type: Boolean, default: false },
     comprador:      { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
     vinculoPublico: { type: Boolean, default: false },

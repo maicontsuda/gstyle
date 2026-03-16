@@ -724,13 +724,18 @@ export default function AddEstoque() {
               <h3 className="font-semibold text-[var(--chrome-light)] text-sm uppercase tracking-wider">⚙️ Equipamentos / Opcionais</h3>
               <p className="text-xs text-[var(--text-muted)]">Itens detectados do Goo-net serão marcados automaticamente. Clique para alterar.</p>
               
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                 {equipamentosList.map(eq => (
-                  <label key={eq} className="flex items-center gap-2 cursor-pointer group">
-                    <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${formData.equipamentos.includes(eq) ? 'bg-[var(--primary)] border-[var(--primary)] text-white' : 'border-[var(--chrome-dark)] group-hover:border-[var(--chrome-normal)] bg-transparent'}`}>
-                       {formData.equipamentos.includes(eq) && <span className="text-[10px]">✔</span>}
-                    </div>
-                    <span className={`text-sm transition-colors ${formData.equipamentos.includes(eq) ? 'text-white' : 'text-[var(--chrome-light)]'}`}>{eq}</span>
+                  <label key={eq} className="flex items-center gap-3 cursor-pointer group bg-black/20 hover:bg-black/40 p-2.5 rounded-lg border border-transparent hover:border-[var(--border)] transition-all">
+                    <input 
+                      type="checkbox" 
+                      checked={formData.equipamentos.includes(eq)} 
+                      onChange={() => handleEquipamentoToggle(eq)}
+                      className="w-4 h-4 accent-[var(--chrome)] cursor-pointer"
+                    />
+                    <span className={`text-sm select-none transition-colors ${formData.equipamentos.includes(eq) ? 'text-white font-medium' : 'text-[var(--text-muted)] group-hover:text-[var(--chrome-light)]'}`}>
+                      {eq}
+                    </span>
                   </label>
                 ))}
               </div>

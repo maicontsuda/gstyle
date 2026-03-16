@@ -475,13 +475,18 @@ export default function EditCarro() {
             {/* ── Equipamentos / Opcionais ─────────────────────── */}
             <div className="border border-[var(--chrome-dark)]/30 bg-[var(--bg-card2)]/40 rounded-xl p-6 space-y-4">
               <h3 className="font-semibold text-[var(--chrome-light)] text-sm uppercase tracking-wider">⚙️ Equipamentos / Opcionais</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                 {equipamentosList.map(eq => (
-                  <label key={eq} className="flex items-center gap-2 cursor-pointer group">
-                    <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${form.equipamentos?.includes(eq) ? 'bg-[var(--primary)] border-[var(--primary)] text-white' : 'border-[var(--chrome-dark)] group-hover:border-[var(--chrome-normal)] bg-transparent'}`}>
-                       {form.equipamentos?.includes(eq) && <span className="text-[10px]">✔</span>}
-                    </div>
-                    <span className={`text-sm transition-colors ${form.equipamentos?.includes(eq) ? 'text-white' : 'text-[var(--chrome-light)]'}`}>{eq}</span>
+                  <label key={eq} className="flex items-center gap-3 cursor-pointer group bg-black/20 hover:bg-black/40 p-2.5 rounded-lg border border-transparent hover:border-[var(--border)] transition-all">
+                    <input 
+                      type="checkbox" 
+                      checked={form.equipamentos?.includes(eq) || false} 
+                      onChange={() => handleEquipamentoToggle(eq)}
+                      className="w-4 h-4 accent-[var(--chrome)] cursor-pointer"
+                    />
+                    <span className={`text-sm select-none transition-colors ${form.equipamentos?.includes(eq) ? 'text-white font-medium' : 'text-[var(--text-muted)] group-hover:text-[var(--chrome-light)]'}`}>
+                      {eq}
+                    </span>
                   </label>
                 ))}
               </div>
