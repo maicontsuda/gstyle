@@ -16,6 +16,7 @@ export default function Contato() {
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [novoTelefone, setNovoTelefone] = useState('');
+  const [novoTelefoneNome, setNovoTelefoneNome] = useState('');
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [selectedDay, setSelectedDay] = useState(null); // { dateStr, tipo, descricao }
   const [showDayModal, setShowDayModal] = useState(false);
@@ -88,14 +89,23 @@ export default function Contato() {
   const addTelefone = () => {
     const num = novoTelefone.trim();
     if (!num) return;
-    const novos = [...(config.telefones || []), num];
+    
+    let textoFinal = num;
+    const nome = novoTelefoneNome.trim();
+    if (nome) {
+      textoFinal = `${nome}: ${num}`;
+    }
+
+    const novos = [...(config.telefones || []), textoFinal];
     setNovoTelefone('');
+    setNovoTelefoneNome('');
     saveConfig({ telefones: novos });
   };
   const removeTelefone = (i) => {
     const novos = (config.telefones || []).filter((_, idx) => idx !== i);
     saveConfig({ telefones: novos });
   };
+
 
   // ── Calendário ───────────────────────────────────────
   const year = calendarDate.getFullYear();
@@ -175,19 +185,43 @@ export default function Contato() {
                 <h3>Telefone / WhatsApp</h3>
                 {(config.telefones || []).length === 0 && <p className="text-muted-sm">Nenhum telefone cadastrado.</p>}
                 <ul className="telefone-lista">
-                  {(config.telefones || []).map((tel, i) => (
-                    <li key={i} className="telefone-item">
-                      <a href={`https://wa.me/55${tel.replace(/\D/g,'')}`} target="_blank" rel="noreferrer">
-                        {tel}
-                      </a>
-                      {isStaff && (
-                        <button onClick={() => removeTelefone(i)} className="btn-icon-danger" title="Remover">✕</button>
-                      )}
-                    </li>
-                  ))}
+                  {(config.telefones || []).map((tel, i) => {
+                    // Extrai apenas os números para o link do WhatsApp
+                    const apenasNumeros = tel.replace(/\D/g,'');
+                    // Tenta identificar se há um código de país (se não tiver exatamente 12 ou 13 digitos, assumimos Brasil com 55)
+                    let linkWa = '';
+                    if (apenasNumeros.length > 0) {
+                      linkWa = apenasNumeros.startsWith('55') || apenasNumeros.startsWith('81') 
+                        ? `https://wa.me/${apenasNumeros}` 
+                        : `https://wa.me/55${apenasNumeros}`;
+                    }
+
+                    return (
+                      <li key={i} className="telefone-item">
+                        {linkWa ? (
+                          <a href={linkWa} target="_blank" rel="noreferrer">
+                            {tel}
+                          </a>
+                        ) : (
+                          <span>{tel}</span>
+                        )}
+                        {isStaff && (
+                          <button onClick={() => removeTelefone(i)} className="btn-icon-danger" title="Remover">✕</button>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
                 {isStaff && (
-                  <div className="add-telefone-row">
+                  <div className="add-telefone-row" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <input
+                      type="text"
+                      placeholder="Nome (Opcional)"
+                      value={novoTelefoneNome}
+                      onChange={e => setNovoTelefoneNome(e.target.value)}
+                      className="input-ghost"
+                      style={{ flex: 1, minWidth: '120px' }}
+                    />
                     <input
                       type="tel"
                       placeholder="(11) 99999-9999"
@@ -195,6 +229,7 @@ export default function Contato() {
                       onChange={e => setNovoTelefone(e.target.value)}
                       onKeyDown={e => e.key === 'Enter' && addTelefone()}
                       className="input-ghost"
+                      style={{ flex: 2, minWidth: '150px' }}
                     />
                     <button onClick={addTelefone} className="btn btn-sm" disabled={saving}>＋ Adicionar</button>
                   </div>
