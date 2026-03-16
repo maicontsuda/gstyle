@@ -1,6 +1,4 @@
-.contato-page {
-  padding: 40px 0;
-}
+.contato-page { padding: 130px 0 80px; }
 
 .contato-grid {
   display: grid;
@@ -8,11 +6,7 @@
   gap: 40px;
 }
 
-.contato-info {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+.contato-info { display: flex; flex-direction: column; gap: 16px; }
 
 .info-card {
   display: flex;
@@ -23,15 +17,8 @@
   padding: 24px;
   transition: border-color var(--transition);
 }
-
-.info-card:hover {
-  border-color: var(--primary);
-}
-
-.info-icon {
-  font-size: 1.8rem;
-  flex-shrink: 0;
-}
+.info-card:hover { border-color: var(--primary); }
+.info-icon { font-size: 1.8rem; flex-shrink: 0; }
 
 .info-card h3 {
   font-family: 'Inter', sans-serif;
@@ -42,69 +29,147 @@
   color: var(--text-muted);
   margin-bottom: 6px;
 }
+.info-card p { color: var(--text); line-height: 1.7; font-size: 0.95rem; }
+.info-card a { color: var(--primary); font-weight: 600; }
 
-.info-card p {
-  color: var(--text);
-  line-height: 1.7;
-  font-size: 0.95rem;
+.info-link-btn {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--chrome) !important;
+  text-decoration: none;
+  border: 1px solid var(--chrome);
+  padding: 3px 10px;
+  border-radius: 20px;
+  transition: all 0.2s;
 }
+.info-link-btn:hover { background: var(--chrome); color: #000 !important; }
 
-.info-card a {
-  color: var(--primary);
-  font-weight: 600;
+.text-muted-sm { font-size: 0.83rem; color: var(--text-muted); font-style: italic; }
+
+/* Telefones */
+.telefone-lista { list-style: none; padding: 0; margin: 4px 0 12px; display: flex; flex-direction: column; gap: 6px; }
+.telefone-item { display: flex; align-items: center; gap: 8px; }
+.telefone-item a { color: var(--text); font-size: 0.95rem; }
+.telefone-item a:hover { color: var(--chrome); }
+.btn-icon-danger {
+  background: none; border: none; color: #f87171; cursor: pointer; font-size: 0.9rem;
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
 }
+.btn-icon-danger:hover { background: rgba(248,113,113,0.15); }
 
-.social-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.social-links a {
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.social-links a:hover {
-  color: var(--silver);
-}
-
-.contato-mapa {
-  min-height: 400px;
-  display: flex;
-}
-
-.mapa-placeholder {
-  background: var(--bg-card);
+.add-telefone-row { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+.input-ghost {
+  background: rgba(255,255,255,0.05);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  outline: none;
   flex: 1;
+  transition: border-color 0.2s;
+}
+.input-ghost:focus { border-color: var(--chrome); }
+.btn-sm { padding: 6px 14px; font-size: 0.82rem; white-space: nowrap; }
+
+/* Calendário */
+.cal-legenda { display: flex; gap: 10px; align-items: center; margin: 10px 0 6px; flex-wrap: wrap; }
+.cal-tag { font-size: 0.78rem; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+.cal-tag.folga { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+.cal-tag.evento { background: rgba(234,179,8,0.15); color: #facc15; border: 1px solid rgba(234,179,8,0.3); }
+
+.mini-cal { margin-top: 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.cal-nav { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: rgba(255,255,255,0.04); }
+.cal-mes { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+.cal-nav-btn {
+  background: none; border: 1px solid var(--border); color: var(--text);
+  width: 26px; height: 26px; border-radius: 4px;
+  cursor: pointer; font-size: 1rem; line-height: 1;
+  transition: background 0.2s;
+}
+.cal-nav-btn:hover { background: rgba(255,255,255,0.1); }
+
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+.cal-header {
+  text-align: center; font-size: 0.65rem;
+  color: var(--text-muted); font-weight: 700;
+  padding: 4px 0; background: rgba(255,255,255,0.02);
+  text-transform: uppercase;
+}
+.cal-day {
+  text-align: center;
+  padding: 4px 2px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  cursor: default;
+  position: relative;
+  min-height: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 40px;
-  gap: 12px;
+  border-top: 1px solid var(--border);
+  transition: background 0.15s;
 }
+.cal-clickable { cursor: pointer; }
+.cal-clickable:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+.cal-hoje { color: var(--chrome) !important; font-weight: 800; }
+.cal-dot { font-size: 0.55rem; line-height: 1; }
 
-.mapa-placeholder p:first-child {
-  font-size: 3rem;
+.cal-day.especial-folga { background: rgba(239,68,68,0.1); color: #fca5a5; }
+.cal-day.especial-folga:hover { background: rgba(239,68,68,0.2); }
+.cal-day.especial-evento { background: rgba(234,179,8,0.1); color: #fde047; }
+.cal-day.especial-evento:hover { background: rgba(234,179,8,0.2); }
+
+/* Social */
+.social-links { display: flex; flex-direction: column; gap: 8px; }
+.social-links a { color: var(--primary); font-weight: 600; font-size: 0.95rem; }
+.social-links a:hover { color: var(--silver); }
+
+/* Área da Foto */
+.contato-mapa { min-height: 400px; display: flex; }
+.contato-imagem-container.clickable { cursor: pointer; }
+.contato-imagem-container:hover .imagem-edit-overlay { opacity: 1 !important; }
+
+/* Modal de Dia Especial */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
 }
-
-.mapa-placeholder h3 {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
+.modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
 }
-
-.mapa-placeholder p:last-of-type {
+.modal-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; color: var(--chrome); }
+.modal-label {
+  display: block; font-size: 0.8rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  color: var(--text-muted); margin-bottom: 8px;
+}
+.modal-radio-group { display: flex; gap: 10px; margin-bottom: 16px; }
+.modal-radio {
+  flex: 1; padding: 10px 14px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); cursor: pointer; text-align: center;
+  font-size: 0.9rem; font-weight: 600; transition: all 0.2s;
   color: var(--text-muted);
-  font-size: 0.9rem;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
 }
+.modal-radio input[type="radio"] { display: none; }
+.modal-radio.active { border-color: var(--chrome); color: var(--chrome); background: rgba(235,199,139,0.08); }
+.modal-radio:hover { border-color: var(--chrome); }
+.modal-actions { display: flex; gap: 10px; align-items: center; margin-top: 8px; }
 
 @media (max-width: 768px) {
-  .contato-grid {
-    grid-template-columns: 1fr;
-  }
+  .contato-grid { grid-template-columns: 1fr; }
+  .add-telefone-row { flex-direction: column; }
 }

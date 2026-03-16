@@ -124,9 +124,12 @@
 }
 .client-roll-img {
   width: 100%;
-  height: clamp(340px, 55vh, 520px);
-  background-size: cover;
+  height: clamp(220px, 36vh, 340px);
+  background-size: contain;
   background-position: center;
+  background-repeat: no-repeat;
+  background-color: #0a0a0a;
+  cursor: zoom-in;
 }
 .client-roll-overlay {
   position: absolute;

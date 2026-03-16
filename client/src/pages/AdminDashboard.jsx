@@ -52,6 +52,18 @@ export default function AdminDashboard() {
       icon: '👥'
     },
     {
+      title: 'Controle de Frota',
+      description: 'Gerenciar veículos, registrar vendas e vincular aos clientes.',
+      link: '/admin/carros',
+      icon: '🚘'
+    },
+    {
+      title: 'Redes Sociais (Comunidade)',
+      description: 'Postar novos eventos ou fotos do Instagram/TikTok no site.',
+      link: '/admin/publicacoes',
+      icon: '📱'
+    },
+    {
       title: 'Colaboradores',
       description: 'Gerenciar contas da equipe e acessos.',
       link: '#',
@@ -79,20 +91,20 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {adminModules.map((modulo, idx) => (
             <Link 
               key={idx} 
               to={modulo.link} 
-              className={`card p-6 flex items-start gap-4 transition-all duration-300 ${modulo.link === '#' ? 'opacity-50 cursor-not-allowed hover:transform-none hover:shadow-none hover:border-[var(--border)] relative' : 'hover:-translate-y-2 hover:border-[var(--chrome-light)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.1)]'}`}
+              className={`card p-6 flex flex-col items-start gap-4 transition-all duration-300 ${modulo.link === '#' ? 'opacity-50 cursor-not-allowed hover:transform-none hover:shadow-none hover:border-[var(--border)] relative' : 'hover:-translate-y-2 hover:border-[var(--chrome-light)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.1)]'}`}
               onClick={(e) => modulo.link === '#' && e.preventDefault()}
             >
-              <div className="text-4xl bg-[var(--bg-card2)] w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 border border-[var(--border)]">
+              <div className="text-4xl bg-[var(--bg-card2)] w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 border border-[var(--border)]">
                 {modulo.icon}
               </div>
               <div>
-                <h3 className="text-xl font-bold text-[var(--chrome-light)] mb-1">{modulo.title}</h3>
-                <p className="text-sm text-[var(--text-muted)]">{modulo.description}</p>
+                <h3 className="text-lg font-bold text-[var(--chrome-light)] mb-1 leading-tight">{modulo.title}</h3>
+                <p className="text-xs text-[var(--text-muted)] line-clamp-3">{modulo.description}</p>
               </div>
 
               {modulo.link === '#' && (

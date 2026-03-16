@@ -26,7 +26,13 @@ router.get('/google/callback',
 // ── Usuário logado ────────────────────────────────────────────────────────
 router.get('/me', authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-__v');
+    const user = await User.findById(req.user.id)
+      .select('-__v')
+      .populate('favoritosCarros', 'marca modelo ano valor imagens kilometragem km')
+      .populate('historicoCarros.carro', 'marca modelo ano valor imagens kilometragem km')
+      .populate('favoritosPublicacoes', 'titulo tipo dataPublicacao imagemUrl linkDestino ativo')
+      .populate('historicoPublicacoes.publicacao', 'titulo tipo dataPublicacao imagemUrl linkDestino ativo');
+      
     if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
     if (user.email === 'maicontsuda@gmail.com' && user.tipo_usuario !== 'admin') {
       user.tipo_usuario = 'admin';
@@ -54,6 +60,59 @@ router.patch('/me', authMiddleware, async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Erro ao atualizar perfil.' });
   }
+});
+
+// ── Favoritos e Histórico ──────────────────────────────────────────────────
+router.post('/favoritos/carros/:id', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const index = user.favoritosCarros.indexOf(req.params.id);
+    if (index > -1) {
+      user.favoritosCarros.splice(index, 1);
+    } else {
+      user.favoritosCarros.push(req.params.id);
+    }
+    await user.save();
+    res.json({ success: true, isFavorite: index === -1 });
+  } catch (err) { res.status(500).json({ error: 'Erro ao favoritar carro.' }); }
+});
+
+router.post('/favoritos/publicacoes/:id', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const index = user.favoritosPublicacoes.indexOf(req.params.id);
+    if (index > -1) {
+      user.favoritosPublicacoes.splice(index, 1);
+    } else {
+      user.favoritosPublicacoes.push(req.params.id);
+    }
+    await user.save();
+    res.json({ success: true, isFavorite: index === -1 });
+  } catch (err) { res.status(500).json({ error: 'Erro ao favoritar publicação.' }); }
+});
+
+router.post('/historico/carros/:id', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    // Remove if already exists to move to top
+    user.historicoCarros = user.historicoCarros.filter(h => h.carro.toString() !== req.params.id);
+    user.historicoCarros.unshift({ carro: req.params.id, viewedAt: new Date() });
+    // Keep only last 20
+    if (user.historicoCarros.length > 20) user.historicoCarros.pop();
+    await user.save();
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: 'Erro ao registrar histórico.' }); }
+});
+
+router.post('/historico/publicacoes/:id', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    user.historicoPublicacoes = user.historicoPublicacoes.filter(h => h.publicacao.toString() !== req.params.id);
+    user.historicoPublicacoes.unshift({ publicacao: req.params.id, viewedAt: new Date() });
+    if (user.historicoPublicacoes.length > 20) user.historicoPublicacoes.pop();
+    await user.save();
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: 'Erro ao registrar histórico.' }); }
 });
 
 // ── Rol de Clientes (Público) ─────────────────────────────────────────────

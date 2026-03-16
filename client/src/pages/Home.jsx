@@ -112,16 +112,26 @@ export default function Home() {
       </section>
 
       {/* ── Rol de Clientes (Slideshow) ── */}
-      {rolFotos.length > 0 && (
-        <section className="section rol-section">
-          <div className="container">
-            <div className="accent-line" />
-            <h2 className="section-title">Nossos <span>Clientes</span></h2>
-            <p className="section-sub">Momentos especiais das entregas G-Style</p>
+      <section className="section rol-section">
+        <div className="container">
+          <div className="accent-line" />
+          <h2 className="section-title">Nossos <span>Clientes</span></h2>
+          <p className="section-sub">Momentos especiais das entregas G-Style</p>
+          {rolFotos.length > 0 ? (
             <ClientRollSlider fotos={rolFotos} />
-          </div>
-        </section>
-      )}
+          ) : (
+            <div style={{ textAlign: 'center', padding: '40px 20px', border: '1px dashed var(--border)', borderRadius: 'var(--radius)' }}>
+              <div style={{ fontSize: '3rem', marginBottom: 12 }}>📸</div>
+              <p style={{ color: 'var(--text-muted)', marginBottom: 20 }}>
+                Em breve, galeria de fotos de entregas dos nossos clientes!
+              </p>
+              <Link to="/rol-clientes" className="btn btn-outline" style={{ fontSize: '0.88rem' }}>
+                Ver Galeria de Clientes →
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* ── Posts da Rede Social ── */}
       {posts.length > 0 && (

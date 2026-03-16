@@ -20,6 +20,10 @@ import AdminDashboard from './pages/AdminDashboard';
 import GerenciarClientes from './pages/GerenciarClientes';
 import RolDeClientes from './pages/RolDeClientes';
 import Comunidade from './pages/Comunidade';
+import AdminAddPublicacao from './pages/AdminAddPublicacao';
+import AdminCarrosPage from './pages/AdminCarrosPage';
+import EditCarro from './pages/EditCarro';
+import Contato from './pages/Contato';
 import './index.css';
 
 function Layout() {
@@ -41,13 +45,18 @@ function Layout() {
           <Route path="/perfil"         element={<Perfil />} />
           <Route path="/auth/callback"  element={<AuthCallback />} />
           <Route path="/servicos"       element={<Servicos />} />
+          <Route path="/contato"         element={<Contato />} />
           <Route path="/site"           element={<Aparencia />} />
           <Route path="/admin"          element={<AdminDashboard />} />
           <Route path="/admin/add-zerokm" element={<AddZeroKm />} />
           <Route path="/admin/add-estoque" element={<AddEstoque />} />
+          <Route path="/admin/carros" element={<AdminCarrosPage />} />
           <Route path="/admin/clientes" element={<GerenciarClientes />} />
+          <Route path="/admin/publicacoes" element={<AdminAddPublicacao />} />
+          <Route path="/admin/publicacoes/edit/:id" element={<AdminAddPublicacao />} />
           <Route path="/rol-clientes" element={<RolDeClientes />} />
           <Route path="/comunidade" element={<Comunidade />} />
+          <Route path="/admin/carros/edit/:id" element={<EditCarro />} />
         </Routes>
       </main>
       {!hideLayout && <Footer />}

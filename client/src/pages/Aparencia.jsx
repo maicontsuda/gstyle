@@ -29,6 +29,41 @@ const THEMES = [
     desc: 'Visual corporativo, matte cinza fosco com elementos que lembram vidro e segurança.',
     icon: '🛡️',
     colors: ['#1e1e24', '#e2e8f0', '#2d2d35']
+  },
+  {
+    id: 'theme-natal',
+    name: 'Edição de Natal',
+    desc: 'Espírito festivo! Verde escuro profundo com detalhes em vermelho e ouro brilhante.',
+    icon: '🎄',
+    colors: ['#0b1610', '#ffd56b', '#122a1c']
+  },
+  {
+    id: 'theme-halloween',
+    name: 'Halloween Assombrado',
+    desc: 'Clima de travessuras com fundo negro absoluto, roxo e neon laranja da abóbora.',
+    icon: '🎃',
+    colors: ['#0d0812', '#ff6a00', '#1f102e']
+  },
+  {
+    id: 'theme-ano-novo',
+    name: 'Virada de Ano',
+    desc: 'Elegância, prosperidade e muito Ouro com Branco para o Ano Novo.',
+    icon: '🎆',
+    colors: ['#0c0c0c', '#ffffff', '#1c1c1c']
+  },
+  {
+    id: 'theme-black-friday',
+    name: 'Black Friday',
+    desc: 'Visual agressivo de liquidação, escuridão total com destaques em amarelo puro.',
+    icon: '🔥',
+    colors: ['#000000', '#ffe600', '#0a0a0a']
+  },
+  {
+    id: 'theme-aniversario',
+    name: 'Aniversário da Loja',
+    desc: 'Clima de festa! Fundo roxo noturno com detalhes em Rosa Neon, tons de balão metálico e confetes.',
+    icon: '🎈',
+    colors: ['#12081c', '#ff49aa', '#241038']
   }
 ];
 

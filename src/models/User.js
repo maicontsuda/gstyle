@@ -69,6 +69,17 @@ const userSchema = new mongoose.Schema({
         fotoPublica: { type: Boolean, default: false },
         depoimento:  { type: String, default: '' },
     },
+    // ── Favoritos e Histórico ────────────────────────────────────────────
+    favoritosCarros: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Carro' }],
+    historicoCarros: [{
+        carro: { type: mongoose.Schema.Types.ObjectId, ref: 'Carro' },
+        viewedAt: { type: Date, default: Date.now }
+    }],
+    favoritosPublicacoes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Publicacao' }],
+    historicoPublicacoes: [{
+        publicacao: { type: mongoose.Schema.Types.ObjectId, ref: 'Publicacao' },
+        viewedAt: { type: Date, default: Date.now }
+    }],
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 });

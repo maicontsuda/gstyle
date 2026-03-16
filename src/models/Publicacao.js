@@ -26,6 +26,19 @@ const publicacaoSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    dataInicio: {
+        type: Date,
+        default: null
+    },
+    dataFim: {
+        type: Date,
+        default: null
+    },
+    parceiroVinculado: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null
+    },
     dataPublicacao: {
         type: Date,
         default: Date.now

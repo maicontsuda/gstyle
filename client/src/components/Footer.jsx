@@ -22,6 +22,8 @@ export default function Footer() {
               <li><Link to="/">Início</Link></li>
               <li><Link to="/estoque">Estoque</Link></li>
               <li><a href="/#servicos">Serviços</a></li>
+              <li><Link to="/rol-clientes">Rol de Clientes</Link></li>
+              <li><Link to="/comunidade">Comunidade</Link></li>
             </ul>
           </div>
 

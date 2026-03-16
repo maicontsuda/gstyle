@@ -28,7 +28,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 /* Logo */
@@ -63,7 +64,9 @@
 /* Nav links */
 .navbar-links {
   display: flex;
-  gap: 36px;
+  gap: 12px 24px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .navbar-links a {
   font-size: 0.9rem;

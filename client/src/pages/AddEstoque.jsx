@@ -112,6 +112,19 @@ export default function AddEstoque() {
     informacoes_adicionais: '',
     historicoReparo: false,
     donoUnico: false,
+    
+    // Novas categorias Goo-net
+    comprimento: '',
+    largura: '',
+    altura: '',
+    peso: '',
+    wltcConsumo: '',
+    jc08Consumo: '',
+    chassiCodigo: '',
+    avaliacaoExterna: '',
+    avaliacaoInterna: '',
+    estadoMecanico: 'Normal',
+
     imagens: '',
     // ── Redes Sociais
     linkVideo: '',
@@ -229,6 +242,18 @@ export default function AddEstoque() {
         shakenVencimento: data.shakenVencimento || prev.shakenVencimento,
         historicoReparo: data.historicoReparo != null ? Boolean(data.historicoReparo) : prev.historicoReparo,
         donoUnico:       data.donoUnico       != null ? Boolean(data.donoUnico) : prev.donoUnico,
+        
+        comprimento:     data.comprimento     || prev.comprimento,
+        largura:         data.largura         || prev.largura,
+        altura:          data.altura          || prev.altura,
+        peso:            data.peso            || prev.peso,
+        wltcConsumo:     data.wltcConsumo     || prev.wltcConsumo,
+        jc08Consumo:     data.jc08Consumo     || prev.jc08Consumo,
+        chassiCodigo:    data.chassiCodigo    || prev.chassiCodigo,
+        avaliacaoExterna:data.avaliacaoExterna|| prev.avaliacaoExterna,
+        avaliacaoInterna:data.avaliacaoInterna|| prev.avaliacaoInterna,
+        estadoMecanico:  data.estadoMecanico  || prev.estadoMecanico,
+
         observacoes:     data.observacoes     || prev.observacoes,
         equipamentos:    importedEquips.length > 0 ? importedEquips : prev.equipamentos,
       }));
@@ -599,6 +624,64 @@ export default function AddEstoque() {
                   <option value="4WD">4WD (Integral)</option>
                   <option value="AWD">AWD (Integral)</option>
                   <option value="MR">MR (Motor Central)</option>
+                </select>
+              </div>
+            </div>
+
+            {/* ── Dimensões e Consumo (Novo Goo-net) ──────────────── */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-[var(--bg-card2)]/30 p-4 rounded-xl border border-[var(--border)] mt-4">
+              <div>
+                <label className={lbl}>Comprimento (mm)</label>
+                <input type="number" name="comprimento" value={formData.comprimento} onChange={handleChange} placeholder="Ex: 4895" className={inp} />
+              </div>
+              <div>
+                <label className={lbl}>Largura (mm)</label>
+                <input type="number" name="largura" value={formData.largura} onChange={handleChange} placeholder="Ex: 1800" className={inp} />
+              </div>
+              <div>
+                <label className={lbl}>Altura (mm)</label>
+                <input type="number" name="altura" value={formData.altura} onChange={handleChange} placeholder="Ex: 1450" className={inp} />
+              </div>
+              <div>
+                <label className={lbl}>Peso (kg)</label>
+                <input type="number" name="peso" value={formData.peso} onChange={handleChange} placeholder="Ex: 1650" className={inp} />
+              </div>
+              
+              <div>
+                <label className={lbl}>Consumo WLTC</label>
+                <input type="text" name="wltcConsumo" value={formData.wltcConsumo} onChange={handleChange} placeholder="Ex: 15.0km/L" className={inp} />
+              </div>
+              <div>
+                <label className={lbl}>Consumo JC08</label>
+                <input type="text" name="jc08Consumo" value={formData.jc08Consumo} onChange={handleChange} placeholder="Ex: 19.2km/L" className={inp} />
+              </div>
+              <div>
+                <label className={lbl}>Código Chassi</label>
+                <input type="text" name="chassiCodigo" value={formData.chassiCodigo} onChange={handleChange} placeholder="Ex: DAA-AWS210" className={inp} />
+              </div>
+            </div>
+
+            {/* ── Avaliação Goo-net / Condição ────────────────────── */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-blue-500/5 p-4 rounded-xl border border-blue-500/20 mt-4">
+              <div>
+                <label className={lbl}>Avaliação Externa (1 a 5)</label>
+                <select name="avaliacaoExterna" value={formData.avaliacaoExterna} onChange={handleChange} className={sel}>
+                  <option value="">Sem avaliação</option>
+                  {[5,4,3,2,1].map(n => <option key={n} value={n}>{n} Estrelas</option>)}
+                </select>
+              </div>
+              <div>
+                <label className={lbl}>Avaliação Interna (1 a 5)</label>
+                <select name="avaliacaoInterna" value={formData.avaliacaoInterna} onChange={handleChange} className={sel}>
+                  <option value="">Sem avaliação</option>
+                  {[5,4,3,2,1].map(n => <option key={n} value={n}>{n} Estrelas</option>)}
+                </select>
+              </div>
+              <div>
+                <label className={lbl}>Estado Mecânico</label>
+                <select name="estadoMecanico" value={formData.estadoMecanico} onChange={handleChange} className={sel}>
+                  <option value="Normal">Normal (正常)</option>
+                  <option value="Requer Atenção">Requer Atenção</option>
                 </select>
               </div>
             </div>

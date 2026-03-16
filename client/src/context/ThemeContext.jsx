@@ -12,7 +12,10 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('gstyle-theme', theme);
     // Remove all previous theme classes
-    document.body.classList.remove('theme-original', 'theme-dark-chrome', 'theme-cyberpunk', 'theme-titanium');
+    document.body.classList.remove(
+      'theme-original', 'theme-dark-chrome', 'theme-cyberpunk', 'theme-titanium',
+      'theme-natal', 'theme-halloween', 'theme-ano-novo', 'theme-black-friday', 'theme-aniversario'
+    );
     // Add current theme class
     document.body.classList.add(theme);
   }, [theme]);

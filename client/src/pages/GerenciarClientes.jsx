@@ -455,11 +455,11 @@ export default function GerenciarClientes() {
                     <div className={`flex items-center gap-3 p-4 rounded-xl border ${selecionado.rolCliente?.visivel ? 'border-green-500/50 bg-green-500/10' : 'border-[var(--border)] bg-black/20'}`}>
                       <div>
                         <p className="font-semibold text-sm text-white">Visível no Rol de Clientes</p>
-                        <p className="text-xs text-[var(--text-muted)]">O cliente também pode controlar isso no próprio perfil.</p>
+                        <p className="text-xs text-[var(--text-muted)]">Quando ativo, a foto aparece na Home e na página Rol de Clientes. O cliente também pode controlar isso no próprio perfil.</p>
                       </div>
                       <button onClick={async () => {
                         const novo = !selecionado.rolCliente?.visivel;
-                        await api.patch(`/auth/users/${selecionado._id}/rol-foto`, {});
+                        await api.patch(`/auth/users/${selecionado._id}/rol-foto`, { visivel: novo, fotoPublica: novo });
                         await refreshCliente(selecionado._id);
                         showMsg(novo ? '✅ Aparece no Rol!' : 'Removido do Rol.');
                       }} className={`ml-auto px-4 py-2 rounded-lg text-sm font-bold transition-all ${selecionado.rolCliente?.visivel ? 'bg-green-500 text-white' : 'bg-white/10 text-[var(--text-muted)] hover:bg-white/20'}`}>

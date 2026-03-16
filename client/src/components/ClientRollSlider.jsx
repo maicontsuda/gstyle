@@ -49,6 +49,8 @@ export default function ClientRollSlider({ fotos = [] }) {
           opacity: fade ? 1 : 0,
           transition: 'opacity 0.5s ease',
         }}
+        onClick={() => window.open(foto.url, '_blank')}
+        title="Clique para ver em tamanho real"
       >
         <div className="client-roll-overlay">
           {foto.titulo && <h3 className="client-roll-title">{foto.titulo}</h3>}

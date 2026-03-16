@@ -283,3 +283,96 @@ body.theme-titanium .card {
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+/* 4. Especial: Natal (Christmas) */
+body.theme-natal {
+  --bg-deep:     #0b1610; /* Verde bem escuro */
+  --bg-dark:     #0d1d14;
+  --bg-card:     #122a1c;
+  --bg-card2:    #183b26;
+  --border:      #a21e21; /* Vermelho escuro */
+  
+  --chrome:        #ffb52e; /* Dourado */
+  --chrome-light:  #ffd56b;
+  --chrome-dark:   #cc2427; /* Vermelho Vivo */
+  
+  --text:        #fcfdfd;
+  --text-muted:  #a1c0b1;
+  --shadow-chrome: 0 8px 30px rgba(255, 181, 46, 0.3);
+}
+body.theme-natal .btn-primary { background: linear-gradient(135deg, #ffb52e, #cc2427); color: #fff; border: none; }
+body.theme-natal .accent-line { background: linear-gradient(90deg, #ffb52e, #cc2427, transparent); }
+
+/* 5. Especial: Halloween */
+body.theme-halloween {
+  --bg-deep:     #0p050b; /* Quase preto */
+  --bg-dark:     #0d0812; /* Fundo roxo absurdamente escuro */
+  --bg-card:     #130a1c;
+  --bg-card2:    #1f102e;
+  --border:      #ff6a00; /* Laranja da abóbora */
+  
+  --chrome:        #ff6a00; /* Laranja Metálico */
+  --chrome-light:  #ff9e43;
+  --chrome-dark:   #7928ca; /* Roxo */
+  
+  --text:        #ffe4d6;
+  --text-muted:  #9e8a9d;
+  --shadow-chrome: 0 0 25px rgba(255, 106, 0, 0.25);
+}
+body.theme-halloween .btn-primary { background: linear-gradient(135deg, #ff6a00, #7928ca); color: #fff; }
+
+/* 6. Especial: Ano Novo (New Year) */
+body.theme-ano-novo {
+  --bg-deep:     #0c0c0c;
+  --bg-dark:     #141414;
+  --bg-card:     #1c1c1c;
+  --bg-card2:    #262626;
+  --border:      #d4af37; /* Dourado metálico */
+  
+  --chrome:        #ffd700; /* Ouro */
+  --chrome-light:  #ffffff; /* Prata/Branco puro */
+  --chrome-dark:   #b89947;
+  
+  --text:        #ffffff;
+  --text-muted:  #afafaf;
+  --shadow-chrome: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+body.theme-ano-novo .btn-primary { background: linear-gradient(135deg, #ffffff, #ffd700); color: #000; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); }
+
+/* 7. Especial: Black Friday */
+body.theme-black-friday {
+  --bg-deep:     #000000;
+  --bg-dark:     #020202;
+  --bg-card:     #050505;
+  --bg-card2:    #0a0a0a;
+  --border:      #ffe600; /* Amarelo Black Friday */
+  
+  --chrome:        #ffe600;
+  --chrome-light:  #fffb00;
+  --chrome-dark:   #b3a100;
+  
+  --text:        #ffffff;
+  --text-muted:  #888888;
+  --shadow-chrome: 0 0 10px rgba(255, 230, 0, 0.8); /* Glow agressivo */
+}
+body.theme-black-friday .card { border: 1px solid #ffe60033; }
+body.theme-black-friday .btn-primary { background: #ffe600; color: #000; font-weight: 800; transform: scale(1.02); }
+
+/* 8. Especial: Aniversário da G-Style */
+body.theme-aniversario {
+  --bg-deep:     #12081c; /* Roxo escuro festivo */
+  --bg-dark:     #1a0c29;
+  --bg-card:     #241038;
+  --bg-card2:    #31174d;
+  --border:      #ffbdf5; /* Rosa metálico / balão */
+  
+  --chrome:        #ff49aa; /* Rosa Neon */
+  --chrome-light:  #ffbdf5;
+  --chrome-dark:   #682073; 
+  
+  --text:        #ffffff;
+  --text-muted:  #dca1e3;
+  --shadow-chrome: 0 0 25px rgba(255, 73, 170, 0.3); /* Brilho rosa neon */
+}
+body.theme-aniversario .btn-primary { background: linear-gradient(135deg, #ffbdf5, #ff49aa); color: #000; box-shadow: 0 4px 15px rgba(255, 73, 170, 0.4); }
+body.theme-aniversario .accent-line { background: linear-gradient(90deg, #ffbdf5, #ff49aa, transparent); }

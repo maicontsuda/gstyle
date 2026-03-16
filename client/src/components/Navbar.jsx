@@ -36,9 +36,7 @@ export default function Navbar() {
           <Link to="/servicos" className={location.pathname === '/servicos' ? 'active' : ''}>Serviços</Link>
           <Link to="/contato" className={location.pathname === '/contato' ? 'active' : ''}>Contato</Link>
           <Link to="/site" className={location.pathname === '/site' ? 'active' : ''}>Site</Link>
-          {user && ['admin', 'dono', 'gerente', 'funcionario'].includes(user.tipo_usuario) && (
-            <Link to="/admin" className={location.pathname.startsWith('/admin') ? 'active' : ''}>Admin</Link>
-          )}
+          <Link to="/comunidade" className={location.pathname === '/comunidade' ? 'active' : ''}>Comunidade</Link>
         </nav>
 
         <div className="navbar-actions">
