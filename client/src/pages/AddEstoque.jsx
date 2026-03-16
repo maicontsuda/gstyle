@@ -167,7 +167,7 @@ export default function AddEstoque() {
 
   const equipamentosList = [
     'Ar Condicionado', 'Direção Hidráulica', 'Vidros Elétricos', 'Travas Elétricas',
-    'Teto Solar', 'Bancos de Couro', 'Bancos Elétricos', 'Aquecimento de Bancos',
+    'Teto Solar', 'Tela de Teto', 'Bancos de Couro', 'Bancos Elétricos', 'Aquecimento de Bancos',
     'Navegação GPS', 'Navi Original', 'Apple CarPlay', 'Android Auto', 'Bluetooth',
     'Câmera de Ré', 'Camera Record (Dashcam)', 'Sensores de Estacionamento', 'Câmera 360',
     'Airbag', 'Freios ABS', 'Controle de Estabilidade', 'Alerta de Ponto Cego',
@@ -176,7 +176,7 @@ export default function AddEstoque() {
     'Rodas de Liga Leve', 'Comando de Som no Volante', 'Chave Presencial', 'Sistema Start-Stop', 'ETC'
   ];
 
-  const aquecimentoOpcoes = ['Dianteiros', 'Traseiros', 'Todos'];
+  const aquecimentoOpcoes = ['Motorista', 'Passageiro da Frente', 'Banco Traseiro Direito', 'Banco Traseiro Esquerdo'];
   const handleAquecimentoToggle = (opcao) => {
     const tag = `Aquecimento de Bancos - ${opcao}`;
     setFormData(prev => {
