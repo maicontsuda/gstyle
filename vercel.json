@@ -2,17 +2,28 @@
   "version": 2,
   "builds": [
     {
-      "src": "src/server.js",
-      "use": "@vercel/node"
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "buildCommand": "npm run vercel-build"
+      }
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/api/(.*)",
       "dest": "/src/server.js",
       "headers": {
         "Content-Security-Policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:;"
       }
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|webp|webm|mp4|txt|map))",
+      "dest": "/client/dist/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/src/server.js"
     }
   ]
 }
