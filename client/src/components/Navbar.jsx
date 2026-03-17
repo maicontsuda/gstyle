@@ -35,7 +35,6 @@ export default function Navbar() {
           <Link to="/seguro" className={location.pathname === '/seguro' ? 'active' : ''}>Seguro</Link>
           <Link to="/servicos" className={location.pathname === '/servicos' ? 'active' : ''}>Serviços</Link>
           <Link to="/contato" className={location.pathname === '/contato' ? 'active' : ''}>Contato</Link>
-          <Link to="/site" className={location.pathname === '/site' ? 'active' : ''}>Site</Link>
           <Link to="/comunidade" className={location.pathname === '/comunidade' ? 'active' : ''}>Comunidade</Link>
         </nav>
 
@@ -48,7 +47,10 @@ export default function Navbar() {
               <div className="navbar-user-menu">
                 <Link to="/perfil">Meu Perfil</Link>
                 {user && ['admin', 'dono', 'gerente', 'funcionario'].includes(user.tipo_usuario) && (
-                  <Link to="/admin">Painel Admin</Link>
+                  <>
+                    <Link to="/site">Aparência</Link>
+                    <Link to="/admin">Painel Admin</Link>
+                  </>
                 )}
                 <button onClick={logout}>Sair</button>
               </div>
