@@ -6,23 +6,23 @@ import './ZeroKmHome.css';
 // Mockup de Logos de marcas para ilustrar o grid de marcas automotivas
 // Numa aplicação real, você teria imagens reais salvas ou na collection de Brands
 const BRAND_LOGOS = {
-  // Japonesas
-  'Toyota': 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Toyota.svg',
-  'Honda': 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg',
-  'Nissan': 'https://upload.wikimedia.org/wikipedia/commons/8/8c/Nissan_logo.png',
-  'Subaru': 'https://upload.wikimedia.org/wikipedia/de/3/30/Subaru_Logo_V2.svg',
-  'Mazda': 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Mazda_logo_with_emblem.svg',
-  'Lexus': 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Lexus_logo.svg',
-  'Suzuki': 'https://upload.wikimedia.org/wikipedia/commons/1/12/Suzuki_logo_2.svg',
-  'Daihatsu':'https://upload.wikimedia.org/wikipedia/commons/d/de/Daihatsu_red_logo.svg',
+  // Japonesas - usando URLs confiáveis de CDNs públicos
+  'Toyota':   'https://cdn.worldvectorlogo.com/logos/toyota-1.svg',
+  'Honda':    'https://cdn.worldvectorlogo.com/logos/honda-6.svg',
+  'Nissan':   'https://cdn.worldvectorlogo.com/logos/nissan-6.svg',
+  'Subaru':   'https://cdn.worldvectorlogo.com/logos/subaru-2.svg',
+  'Mazda':    'https://cdn.worldvectorlogo.com/logos/mazda-4.svg',
+  'Lexus':    'https://cdn.worldvectorlogo.com/logos/lexus-2.svg',
+  'Suzuki':   'https://cdn.worldvectorlogo.com/logos/suzuki-3.svg',
+  'Daihatsu': 'https://cdn.worldvectorlogo.com/logos/daihatsu.svg',
   
   // Importadas
-  'BMW': 'https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg',
-  'Mercedes-Benz': 'https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg',
-  'Audi': 'https://upload.wikimedia.org/wikipedia/commons/9/92/Audi-Logo_2016.svg',
-  'Jeep': 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Jeep_logo.svg',
-  'Volkswagen': 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Volkswagen_logo_2019.svg',
-  'Porsche': 'https://upload.wikimedia.org/wikipedia/en/e/e4/Porsche_Logo.svg'
+  'BMW':          'https://cdn.worldvectorlogo.com/logos/bmw.svg',
+  'Mercedes-Benz':'https://cdn.worldvectorlogo.com/logos/mercedes-benz-9.svg',
+  'Audi':         'https://cdn.worldvectorlogo.com/logos/audi-13.svg',
+  'Jeep':         'https://cdn.worldvectorlogo.com/logos/jeep-1.svg',
+  'Volkswagen':   'https://cdn.worldvectorlogo.com/logos/volkswagen-2.svg',
+  'Porsche':      'https://cdn.worldvectorlogo.com/logos/porsche-3.svg',
 };
 
 export default function ZeroKmHome() {
@@ -84,7 +84,7 @@ export default function ZeroKmHome() {
                   <div key={brand} className="brand-card card cursor-pointer group" onClick={() => selectBrand(brand)}>
                     <div className="h-24 flex items-center justify-center p-4">
                       {BRAND_LOGOS[brand] ? (
-                        <img src={BRAND_LOGOS[brand]} alt={brand} className="max-h-16 max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110 opacity-70 group-hover:opacity-100" />
+                        <img src={BRAND_LOGOS[brand]} alt={brand} className="max-h-16 max-w-full object-contain filter grayscale-[60%] group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110 opacity-90 group-hover:opacity-100 brightness-110 group-hover:brightness-125" />
                       ) : (
                         <span className="text-xl font-bold text-[var(--chrome)] uppercase tracking-wider">{brand}</span>
                       )}
@@ -115,7 +115,7 @@ export default function ZeroKmHome() {
                   <div key={brand} className="brand-card card cursor-pointer group" onClick={() => selectBrand(brand)}>
                     <div className="h-24 flex items-center justify-center p-4">
                       {BRAND_LOGOS[brand] ? (
-                        <img src={BRAND_LOGOS[brand]} alt={brand} className="max-h-16 max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110 opacity-70 group-hover:opacity-100" />
+                        <img src={BRAND_LOGOS[brand]} alt={brand} className="max-h-16 max-w-full object-contain filter grayscale-[60%] group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110 opacity-90 group-hover:opacity-100 brightness-110 group-hover:brightness-125" />
                       ) : (
                         <span className="text-xl font-bold text-[var(--chrome)] uppercase tracking-wider">{brand}</span>
                       )}
