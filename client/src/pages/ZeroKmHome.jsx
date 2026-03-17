@@ -30,17 +30,22 @@ export default function ZeroKmHome() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const DEFAULT_MARCAS = {
+    Japonesa: ['Toyota', 'Honda', 'Nissan', 'Subaru', 'Mazda', 'Lexus', 'Suzuki', 'Daihatsu'],
+    Importada: ['BMW', 'Mercedes-Benz', 'Audi', 'Jeep', 'Volkswagen', 'Porsche']
+  };
+
   useEffect(() => {
-    // Busca as marcas distintas na base que têm carros 0KM
     api.get('/zerokm/marcas')
-      .then(r => setMarcas(r.data))
-      .catch(err => {
-        console.error("Erro ao buscar marcas:", err);
-        // Exemplo de fallback caso a base ainda não tenha dados
-        setMarcas({
-          Japonesa: ['Toyota', 'Honda', 'Nissan', 'Subaru', 'Mazda', 'Lexus', 'Suzuki', 'Daihatsu'],
-          Importada: ['BMW', 'Mercedes-Benz', 'Audi', 'Jeep', 'Volkswagen', 'Porsche']
-        });
+      .then(r => {
+        const data = r.data || {};
+        // Se a API retornou arrays vazios, usa a lista padrão
+        const japonesa = data.Japonesa?.length > 0 ? data.Japonesa : DEFAULT_MARCAS.Japonesa;
+        const importada = data.Importada?.length > 0 ? data.Importada : DEFAULT_MARCAS.Importada;
+        setMarcas({ Japonesa: japonesa, Importada: importada });
+      })
+      .catch(() => {
+        setMarcas(DEFAULT_MARCAS);
       })
       .finally(() => setLoading(false));
   }, []);
