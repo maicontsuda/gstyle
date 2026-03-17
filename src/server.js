@@ -35,6 +35,20 @@ app.use('/api/ai-scraper',   require('./routes/ai-scraper'));
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
+// Debug Lambda Disk
+app.get('/api/debug-files', (req, res) => {
+  const fs = require('fs');
+  const path = require('path');
+  const distPath = path.join(__dirname, '../client/dist');
+  try {
+    const files = fs.readdirSync(distPath);
+    const assets = fs.readdirSync(path.join(distPath, 'assets'));
+    res.json({ distPath, files, assets });
+  } catch (err) {
+    res.json({ error: err.message, __dirname, expected: distPath });
+  }
+});
+
 // Serve React SPA static files
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
