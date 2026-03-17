@@ -6,15 +6,15 @@ import './ZeroKmHome.css';
 // Mockup de Logos de marcas para ilustrar o grid de marcas automotivas
 // Numa aplicação real, você teria imagens reais salvas ou na collection de Brands
 const BRAND_LOGOS = {
-  // Japonesas
-  'Toyota':   'https://static.cdnlogo.com/logos/t/76/toyota.svg',
-  'Honda':    'https://static.cdnlogo.com/logos/h/57/honda.svg',
-  'Nissan':   'https://static.cdnlogo.com/logos/n/18/nissan.svg',
-  'Subaru':   'https://static.cdnlogo.com/logos/s/39/subaru.svg',
+  // Japonesas (usando os arquivos locais fornecidos na pasta logo/)
+  'Toyota':   '/logos/toyota.webp',
+  'Honda':    '/logos/honda.jpg',
+  'Nissan':   '/logos/nissan.png',
+  'Subaru':   '/logos/subaru.jpg',
   'Mazda':    'https://static.cdnlogo.com/logos/m/31/mazda.svg',
-  'Lexus':    'https://static.cdnlogo.com/logos/l/31/lexus.svg',
-  'Suzuki':   'https://static.cdnlogo.com/logos/s/42/suzuki.svg',
-  'Daihatsu': 'https://cdn.worldvectorlogo.com/logos/daihatsu.svg',
+  'Lexus':    '/logos/lexus.png',
+  'Suzuki':   '/logos/suzuki.png',
+  'Daihatsu': '/logos/Daihatsu.png',
   
   // Importadas
   'BMW':          'https://static.cdnlogo.com/logos/b/66/bmw.svg',
