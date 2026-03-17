@@ -6,24 +6,43 @@ import './ZeroKmHome.css';
 // Mockup de Logos de marcas para ilustrar o grid de marcas automotivas
 // Numa aplicação real, você teria imagens reais salvas ou na collection de Brands
 const BRAND_LOGOS = {
-  // Japonesas - usando URLs confiáveis de CDNs públicos
-  'Toyota':   'https://cdn.worldvectorlogo.com/logos/toyota-1.svg',
-  'Honda':    'https://cdn.worldvectorlogo.com/logos/honda-6.svg',
-  'Nissan':   'https://cdn.worldvectorlogo.com/logos/nissan-6.svg',
-  'Subaru':   'https://cdn.worldvectorlogo.com/logos/subaru-2.svg',
-  'Mazda':    'https://cdn.worldvectorlogo.com/logos/mazda-4.svg',
-  'Lexus':    'https://cdn.worldvectorlogo.com/logos/lexus-2.svg',
-  'Suzuki':   'https://cdn.worldvectorlogo.com/logos/suzuki-3.svg',
+  // Japonesas
+  'Toyota':   'https://static.cdnlogo.com/logos/t/76/toyota.svg',
+  'Honda':    'https://static.cdnlogo.com/logos/h/57/honda.svg',
+  'Nissan':   'https://static.cdnlogo.com/logos/n/18/nissan.svg',
+  'Subaru':   'https://static.cdnlogo.com/logos/s/39/subaru.svg',
+  'Mazda':    'https://static.cdnlogo.com/logos/m/31/mazda.svg',
+  'Lexus':    'https://static.cdnlogo.com/logos/l/31/lexus.svg',
+  'Suzuki':   'https://static.cdnlogo.com/logos/s/42/suzuki.svg',
   'Daihatsu': 'https://cdn.worldvectorlogo.com/logos/daihatsu.svg',
   
   // Importadas
-  'BMW':          'https://cdn.worldvectorlogo.com/logos/bmw.svg',
-  'Mercedes-Benz':'https://cdn.worldvectorlogo.com/logos/mercedes-benz-9.svg',
-  'Audi':         'https://cdn.worldvectorlogo.com/logos/audi-13.svg',
-  'Jeep':         'https://cdn.worldvectorlogo.com/logos/jeep-1.svg',
-  'Volkswagen':   'https://cdn.worldvectorlogo.com/logos/volkswagen-2.svg',
-  'Porsche':      'https://cdn.worldvectorlogo.com/logos/porsche-3.svg',
+  'BMW':          'https://static.cdnlogo.com/logos/b/66/bmw.svg',
+  'Mercedes-Benz':'https://static.cdnlogo.com/logos/m/32/mercedes-benz.svg',
+  'Audi':         'https://static.cdnlogo.com/logos/a/34/audi.svg',
+  'Jeep':         'https://static.cdnlogo.com/logos/j/8/jeep.svg',
+  'Volkswagen':   'https://static.cdnlogo.com/logos/v/52/volkswagen.svg',
+  'Porsche':      'https://static.cdnlogo.com/logos/p/53/porsche.svg',
 };
+
+function BrandLogo({ brand }) {
+  const src = BRAND_LOGOS[brand];
+  if (!src) return <span className="text-xl font-bold text-[var(--chrome)] uppercase tracking-wider">{brand}</span>;
+  return (
+    <img
+      src={src}
+      alt={brand}
+      className="max-h-16 max-w-full object-contain filter grayscale-[50%] group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110 opacity-90 group-hover:opacity-100 brightness-125 group-hover:brightness-150"
+      onError={e => {
+        e.target.style.display = 'none';
+        const fallback = document.createElement('span');
+        fallback.textContent = brand;
+        fallback.style.cssText = 'font-size:1.1rem;font-weight:700;color:var(--chrome-light);letter-spacing:0.1em;text-transform:uppercase;';
+        e.target.parentNode.appendChild(fallback);
+      }}
+    />
+  );
+}
 
 export default function ZeroKmHome() {
   const [marcas, setMarcas] = useState({ Japonesa: [], Importada: [] });
@@ -88,11 +107,7 @@ export default function ZeroKmHome() {
                 {marcas.Japonesa.map(brand => (
                   <div key={brand} className="brand-card card cursor-pointer group" onClick={() => selectBrand(brand)}>
                     <div className="h-24 flex items-center justify-center p-4">
-                      {BRAND_LOGOS[brand] ? (
-                        <img src={BRAND_LOGOS[brand]} alt={brand} className="max-h-16 max-w-full object-contain filter grayscale-[60%] group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110 opacity-90 group-hover:opacity-100 brightness-110 group-hover:brightness-125" />
-                      ) : (
-                        <span className="text-xl font-bold text-[var(--chrome)] uppercase tracking-wider">{brand}</span>
-                      )}
+                      <BrandLogo brand={brand} />
                     </div>
                     <div className="bg-[var(--border)] h-px w-full opacity-50"></div>
                     <div className="p-3 text-center">
@@ -119,11 +134,7 @@ export default function ZeroKmHome() {
                 {marcas.Importada.map(brand => (
                   <div key={brand} className="brand-card card cursor-pointer group" onClick={() => selectBrand(brand)}>
                     <div className="h-24 flex items-center justify-center p-4">
-                      {BRAND_LOGOS[brand] ? (
-                        <img src={BRAND_LOGOS[brand]} alt={brand} className="max-h-16 max-w-full object-contain filter grayscale-[60%] group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110 opacity-90 group-hover:opacity-100 brightness-110 group-hover:brightness-125" />
-                      ) : (
-                        <span className="text-xl font-bold text-[var(--chrome)] uppercase tracking-wider">{brand}</span>
-                      )}
+                      <BrandLogo brand={brand} />
                     </div>
                     <div className="bg-[var(--border)] h-px w-full opacity-50"></div>
                     <div className="p-3 text-center">
