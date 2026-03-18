@@ -24,16 +24,16 @@ import AdminAddPublicacao from './pages/AdminAddPublicacao';
 import AdminCarrosPage from './pages/AdminCarrosPage';
 import EditCarro from './pages/EditCarro';
 import Contato from './pages/Contato';
-import Particles from './components/Particles';
+import ThemeEffects from './components/ThemeEffects';
 import './index.css';
 
 function Layout() {
-  const { theme } = useTheme();
+  const { } = useTheme(); // Just calling it to subscribe if needed, though not strictly used in this closure. Actually I don't need useTheme here anymore.
   const location = useLocation();
   const hideLayout = ['/login'].includes(location.pathname);
   return (
     <>
-      <Particles theme={theme} />
+      <ThemeEffects />
       {!hideLayout && <Navbar />}
       <main>
         <Routes>

@@ -244,43 +244,114 @@ body.theme-dark-chrome {
 
 
 
-/* --- Particles --- */
-/* Sakura Petals */
-.sakura-petal {
-  position: fixed;
-  top: -10vh;
-  background: linear-gradient(135deg, #ffb8d9, #ffe6f2);
-  border-radius: 15px 0 15px 0;
-  box-shadow: 0 0 8px rgba(255, 184, 217, 0.6);
-  opacity: 0.8;
-  pointer-events: none;
-  z-index: 9999;
-  animation: fall-sakura linear infinite;
+/* 4. Especial: Natal (Christmas) */
+body.theme-natal {
+  --bg-deep:     #0b1610; 
+  --bg-dark:     #0d1d14;
+  --bg-card:     #122a1c;
+  --bg-card2:    #183b26;
+  --border:      #a21e21; 
+  --chrome:        #a21e21; 
+  --chrome-light:  #188a38; 
+  --chrome-dark:   #681113; 
+  --text:        #fcfdfd;
+  --text-muted:  #a1c0b1;
+  --shadow-chrome: 0 8px 30px rgba(255, 215, 0, 0.4); 
 }
+body.theme-natal .btn-primary { background: linear-gradient(135deg, #a21e21, #681113); color: #ffd700; border: 1px solid #ffd700; }
 
-@keyframes fall-sakura {
-  0% { transform: translate3d(vw, 0, 0) rotate(0deg); opacity: 0; }
-  10% { opacity: 1; }
-  80% { opacity: 0.8; }
-  100% { transform: translate3d(calc(var(--end-x) * 1vw), 110vh, 0) rotate(var(--end-rot)); opacity: 0; }
+/* 5. Especial: Sakura (Spring) */
+body.theme-sakura {
+  --bg-deep:     #170b12; 
+  --bg-dark:     #1f1019;
+  --bg-card:     #2b1824;
+  --bg-card2:    #36202e;
+  --border:      #ffb8d9; 
+  --chrome:        #ff8ebf; 
+  --chrome-light:  #ffe6f2; 
+  --chrome-dark:   #c94c87; 
+  --text:        #fff2f7;
+  --text-muted:  #e0b4cb;
+  --shadow-chrome: 0 0 25px rgba(255, 142, 191, 0.35);
 }
+body.theme-sakura .btn-primary { background: linear-gradient(135deg, #ffb8d9, #ff8ebf); color: #3b0922; }
 
-/* Snow Flakes */
-.snow-flake {
-  position: fixed;
-  top: -10vh;
-  color: #ffffff;
-  text-shadow: 0 0 10px rgba(255,255,255,0.8);
-  font-size: 1.2rem;
-  opacity: 0.8;
-  pointer-events: none;
-  z-index: 9999;
-  animation: fall-snow linear infinite;
+/* 6. Especial: Ano Novo (New Years) */
+body.theme-ano-novo {
+  --bg-deep:     #0c0c0c;
+  --bg-dark:     #141414;
+  --bg-card:     #1c1c1c;
+  --bg-card2:    #262626;
+  --border:      #d4af37; 
+  --chrome:        #ffd700; 
+  --chrome-light:  #ffffff; 
+  --chrome-dark:   #b89947;
+  --text:        #ffffff;
+  --text-muted:  #afafaf;
+  --shadow-chrome: 0 0 20px rgba(255, 215, 0, 0.4);
 }
+body.theme-ano-novo .btn-primary { background: linear-gradient(135deg, #ffffff, #ffd700); color: #000; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); }
 
-@keyframes fall-snow {
-  0% { transform: translate3d(vw, 0, 0) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.9; }
-  80% { opacity: 0.7; }
-  100% { transform: translate3d(calc(var(--end-x) * 1vw), 110vh, 0) rotate(360deg); opacity: 0; }
+/* 7. Especial: Halloween */
+body.theme-halloween {
+  --bg-deep:     #050200; 
+  --bg-dark:     #0d0500; 
+  --bg-card:     #160a00;
+  --bg-card2:    #261000;
+  --border:      #ff6a00; 
+  --chrome:        #ff6a00; 
+  --chrome-light:  #ff9e43;
+  --chrome-dark:   #a84500; 
+  --text:        #ffe4d6;
+  --text-muted:  #c2a797;
+  --shadow-chrome: 0 0 25px rgba(255, 106, 0, 0.25);
 }
+body.theme-halloween .btn-primary { background: linear-gradient(135deg, #ff6a00, #a84500); color: #fff; }
+
+/* 8. Especial: Dia dos Namorados */
+body.theme-namorados {
+  --bg-deep:     #1a050b; 
+  --bg-dark:     #230b13; 
+  --bg-card:     #32111d;
+  --bg-card2:    #441828;
+  --border:      #ff3366; 
+  --chrome:        #ff3366; 
+  --chrome-light:  #ff99b3;
+  --chrome-dark:   #cc0033; 
+  --text:        #ffe6f0;
+  --text-muted:  #d9a6b8;
+  --shadow-chrome: 0 0 25px rgba(255, 51, 102, 0.3);
+}
+body.theme-namorados .btn-primary { background: linear-gradient(135deg, #ff3366, #cc0033); color: #fff; }
+
+/* 9. Especial: Pascoa */
+body.theme-pascoa {
+  --bg-deep:     #0a141a; 
+  --bg-dark:     #0e1b24; 
+  --bg-card:     #12232e;
+  --bg-card2:    #192f3d;
+  --border:      #89cff0; /* baby blue */
+  --chrome:        #89cff0; 
+  --chrome-light:  #ffb6c1; /* baby pink */
+  --chrome-dark:   #5b92aa; 
+  --text:        #e0f0f8;
+  --text-muted:  #a6c2d0;
+  --shadow-chrome: 0 0 25px rgba(137, 207, 240, 0.3);
+}
+body.theme-pascoa .btn-primary { background: linear-gradient(135deg, #89cff0, #ffb6c1); color: #000; }
+
+/* 10. Especial: Aniversario */
+body.theme-aniversario {
+  --bg-deep:     #12081c; 
+  --bg-dark:     #1a0c29;
+  --bg-card:     #241038;
+  --bg-card2:    #31174d;
+  --border:      #ffbdf5; 
+  --chrome:        #00e5ff; /* Cyan cyan */
+  --chrome-light:  #ffbdf5; /* Rosa claro */
+  --chrome-dark:   #682073; 
+  --text:        #ffffff;
+  --text-muted:  #dca1e3;
+  --shadow-chrome: 0 0 25px rgba(0, 229, 255, 0.3); 
+}
+body.theme-aniversario .btn-primary { background: linear-gradient(135deg, #00e5ff, #ffbdf5); color: #000; box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4); }
