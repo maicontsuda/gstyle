@@ -60,7 +60,7 @@ export default function Home() {
             Catálogo selecionado de veículos zero km e semi-novos com a garantia G-Style.
           </p>
           <div className="hero-actions">
-            <Link to="/estoque" className="btn btn-primary">Ver Estoque</Link>
+            <Link to="/estoque" className="btn btn-primary">Ver Semi Novos</Link>
             <a href="#servicos" className="btn btn-ghost">Nossos Serviços</a>
           </div>
           <div className="hero-stats">
@@ -193,7 +193,7 @@ export default function Home() {
             <h2>Pronto para <span>encontrar seu carro?</span></h2>
             <p>Entre em contato ou venha nos visitar. Nossa equipe está pronta para atendê-lo.</p>
             <div className="cta-actions">
-              <Link to="/estoque" className="btn btn-primary">Explorar Estoque</Link>
+              <Link to="/estoque" className="btn btn-primary">Explorar Semi Novos</Link>
               <a href="https://wa.me/818097355956" target="_blank" rel="noreferrer" className="btn btn-ghost">
                 💬 WhatsApp
               </a>

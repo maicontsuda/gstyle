@@ -20,7 +20,7 @@ export default function Footer() {
             <h4>Links Rápidos</h4>
             <ul>
               <li><Link to="/">Início</Link></li>
-              <li><Link to="/estoque">Estoque</Link></li>
+              <li><Link to="/estoque">Semi Novo</Link></li>
               <li><a href="/#servicos">Serviços</a></li>
               <li><Link to="/rol-clientes">Rol de Clientes</Link></li>
               <li><Link to="/comunidade">Comunidade</Link></li>

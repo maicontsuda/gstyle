@@ -163,7 +163,7 @@ export default function Veiculo() {
 
         {/* Breadcrumb */}
         <nav className="breadcrumb">
-          <Link to="/">Início</Link> / <Link to="/estoque">Estoque</Link> / <span>{carro.marca} {carro.modelo}</span>
+          <Link to="/">Início</Link> / <Link to="/estoque">Semi Novo</Link> / <span>{carro.marca} {carro.modelo}</span>
         </nav>
 
         <div className="veiculo-grid">
