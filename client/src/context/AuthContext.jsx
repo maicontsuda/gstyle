@@ -12,7 +12,12 @@ export function AuthProvider({ children }) {
     if (token) {
       api.get('/auth/me')
         .then(res => setUser(res.data))
-        .catch(() => localStorage.removeItem('gstyle_token'))
+        .catch((err) => {
+          // Only log out if it's explicitly an Auth error. Network errors or 500s shouldn't wipe the token.
+          if (err.response && (err.response.status === 401 || err.response.status === 403)) {
+            localStorage.removeItem('gstyle_token');
+          }
+        })
         .finally(() => setLoading(false));
     } else {
       setLoading(false);
